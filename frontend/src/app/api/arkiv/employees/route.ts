@@ -1,67 +1,115 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Force dynamic rendering - prevent static generation at build time
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export interface Employee {
-  id: string;
+  id: string; // entityKey from Arkiv
+  employeeNumber: number; // Index in contract
   walletAddress: string;
   name: string;
   email: string;
   role: string;
-  salary: number;
-  chainPreference: string;
+  active: boolean;
+  totalPaid: number;
+  invoiceCount: number;
   joinDate: string;
 }
 
+// Lazy load Arkiv SDK to prevent build-time execution
+function getArkivSDK() {
+  if (typeof window !== 'undefined') {
+    throw new Error('Arkiv SDK should only be used server-side');
+  }
+  const { createWalletClient, createPublicClient, http } = require('@arkiv-network/sdk');
+  const { privateKeyToAccount } = require('@arkiv-network/sdk/accounts');
+  const { mendoza } = require('@arkiv-network/sdk/chains');
+  const { jsonToPayload, ExpirationTime } = require('@arkiv-network/sdk/utils');
+  const { eq } = require('@arkiv-network/sdk/query');
+  return { createWalletClient, createPublicClient, http, privateKeyToAccount, mendoza, jsonToPayload, ExpirationTime, eq };
+}
+
 class ArkivServerService {
-  private privateKey: string;
-  private baseUrl: string;
+  private walletClient: any;
+  private sdk: any;
 
   constructor(privateKey: string) {
-    this.privateKey = privateKey;
-    this.baseUrl = 'https://api.arkiv.dev';
+    this.sdk = getArkivSDK();
+    this.walletClient = this.sdk.createWalletClient({
+      chain: this.sdk.mendoza,
+      transport: this.sdk.http(),
+      account: this.sdk.privateKeyToAccount(privateKey),
+    });
   }
 
   async getAllEmployees(): Promise<Employee[]> {
-    // For now, return mock data
-    // TODO: Integrate with actual Arkiv API using private key authentication
-    return [
-      {
-        id: '1',
-        walletAddress: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb',
-        name: 'Alice Johnson',
-        email: 'alice@example.com',
-        role: 'Developer',
-        salary: 5000,
-        chainPreference: 'Scroll',
-        joinDate: new Date().toISOString(),
-      },
-      {
-        id: '2',
-        walletAddress: '0x9876543210abcdef9876543210abcdef98765432',
-        name: 'Bob Smith',
-        email: 'bob@example.com',
-        role: 'Designer',
-        salary: 4500,
-        chainPreference: 'Polygon',
-        joinDate: new Date().toISOString(),
-      },
-    ];
+    try {
+      // Create public client for read-only queries
+      const publicClient = this.sdk.createPublicClient({
+        chain: this.sdk.mendoza,
+        transport: this.sdk.http(),
+      });
+
+      // Query entities with type=employee using buildQuery
+      const query = publicClient.buildQuery();
+      const result = await query
+        .where(this.sdk.eq('type', 'employee'))
+        .withPayload(true)
+        .fetch();
+
+      const employees = result.entities.map((entity: any) => {
+        // Parse the payload - it's stored as JSON string
+        const payloadText = new TextDecoder().decode(entity.payload);
+        const data = JSON.parse(payloadText);
+        return {
+          id: entity.entityKey,
+          ...data,
+        };
+      });
+
+      // Sort by employeeNumber
+      return employees.sort((a: Employee, b: Employee) => a.employeeNumber - b.employeeNumber);
+    } catch (error) {
+      console.error('Error fetching from Arkiv:', error);
+      return [];
+    }
   }
 
   async addEmployee(employee: Omit<Employee, 'id' | 'joinDate'>): Promise<Employee> {
-    // TODO: Integrate with actual Arkiv API
-    const newEmployee: Employee = {
+    const newEmployee = {
       ...employee,
-      id: Date.now().toString(),
       joinDate: new Date().toISOString(),
     };
-    return newEmployee;
+
+    try {
+      const { entityKey } = await this.walletClient.createEntity({
+        payload: this.sdk.jsonToPayload(newEmployee),
+        contentType: 'application/json',
+        attributes: [
+          { key: 'type', value: 'employee' },
+          { key: 'employeeNumber', value: employee.employeeNumber.toString() },
+          { key: 'walletAddress', value: employee.walletAddress },
+          { key: 'active', value: employee.active.toString() },
+        ],
+        expiresIn: this.sdk.ExpirationTime.fromYears(10),
+      });
+
+      return {
+        id: entityKey,
+        ...newEmployee,
+      };
+    } catch (error) {
+      console.error('Error adding to Arkiv:', error);
+      throw error;
+    }
   }
 }
 
 // GET /api/arkiv/employees - Get all employees
 export async function GET(request: NextRequest) {
   try {
-    const privateKey = process.env.PRIVATE_KEY;
+    const privateKey = `0x${process.env.PRIVATE_KEY}`;
     
     if (!privateKey) {
       return NextResponse.json(
@@ -86,7 +134,7 @@ export async function GET(request: NextRequest) {
 // POST /api/arkiv/employees - Add new employee
 export async function POST(request: NextRequest) {
   try {
-    const privateKey = process.env.PRIVATE_KEY;
+    const privateKey = `0x${process.env.PRIVATE_KEY}`;
     
     if (!privateKey) {
       return NextResponse.json(
@@ -96,9 +144,9 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { walletAddress, name, email, role, salary, chainPreference } = body;
+    const { employeeNumber, walletAddress, name, email, role, active, totalPaid, invoiceCount } = body;
 
-    if (!walletAddress || !name || !email || !role || !salary || !chainPreference) {
+    if (employeeNumber === undefined || !walletAddress || !name || !email || !role) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -107,12 +155,14 @@ export async function POST(request: NextRequest) {
 
     const arkiv = new ArkivServerService(privateKey);
     const newEmployee = await arkiv.addEmployee({
+      employeeNumber: employeeNumber || 0,
       walletAddress,
       name,
       email,
       role,
-      salary,
-      chainPreference,
+      active: active !== undefined ? active : true,
+      totalPaid: totalPaid || 0,
+      invoiceCount: invoiceCount || 0,
     });
 
     return NextResponse.json(newEmployee, { status: 201 });

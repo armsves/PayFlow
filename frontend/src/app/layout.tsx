@@ -1,10 +1,21 @@
-import type { Metadata } from 'next'
-import './globals.css'
+'use client';
 
-export const metadata: Metadata = {
-  title: 'PayFlow - Cross-Chain Payroll',
-  description: 'Decentralized payroll platform for Web3 companies',
-}
+import './globals.css'
+import { PrivyProvider } from '@privy-io/react-auth';
+import { WagmiProvider } from '@privy-io/wagmi';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { privyConfig, scrollSepoliaChain } from '@/lib/reown-config';
+import { http } from 'viem';
+import { createConfig } from 'wagmi';
+
+const queryClient = new QueryClient();
+
+const wagmiConfig = createConfig({
+  chains: [scrollSepoliaChain as any],
+  transports: {
+    [scrollSepoliaChain.id]: http(),
+  },
+});
 
 export default function RootLayout({
   children,
@@ -13,7 +24,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <PrivyProvider
+          appId={privyConfig.appId}
+          config={privyConfig.config}
+        >
+          <QueryClientProvider client={queryClient}>
+            <WagmiProvider config={wagmiConfig}>
+              {children}
+            </WagmiProvider>
+          </QueryClientProvider>
+        </PrivyProvider>
+      </body>
     </html>
   )
 }

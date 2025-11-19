@@ -53,18 +53,25 @@ export default function EmployeeList({ employees, loading, onRefresh }: Employee
           >
             <div className="flex justify-between items-center">
               <div className="flex-1">
-                <h3 className="text-xl font-semibold text-white mb-1">
-                  {employee.name}
-                </h3>
-                <p className="text-slate-400 text-sm mb-2">{employee.email}</p>
+                <div className="flex items-center gap-3 mb-1">
+                  <h3 className="text-xl font-semibold text-white">
+                    {employee.name}
+                  </h3>
+                  <span className={`px-2 py-1 rounded text-xs font-semibold ${
+                    employee.active ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                  }`}>
+                    {employee.active ? 'Active' : 'Inactive'}
+                  </span>
+                </div>
+                <p className="text-slate-400 text-sm mb-2">{employee.email} • {employee.role}</p>
                 <div className="flex gap-4 text-sm">
                   <span className="text-slate-500">
-                    {employee.walletAddress.slice(0, 6)}...{employee.walletAddress.slice(-4)}
+                    #{employee.employeeNumber} • {employee.walletAddress.slice(0, 6)}...{employee.walletAddress.slice(-4)}
                   </span>
                   <span className="text-primary font-semibold">
-                    ${employee.salary.toLocaleString()}
+                    Total Paid: ${(employee.totalPaid / 1000000).toFixed(2)}
                   </span>
-                  <span className="text-slate-500">{employee.chainPreference}</span>
+                  <span className="text-slate-500">{employee.invoiceCount} invoice{employee.invoiceCount !== 1 ? 's' : ''}</span>
                 </div>
               </div>
 
