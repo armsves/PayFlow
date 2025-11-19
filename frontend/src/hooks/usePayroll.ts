@@ -17,12 +17,27 @@ export function usePayroll() {
       throw new Error('Wallet not connected');
     }
 
-    const wallet = wallets[0];
-    await wallet.switchChain(534351);
-    const ethereumProvider = await wallet.getEthereumProvider();
-    const provider = new BrowserProvider(ethereumProvider);
-    const signer = await provider.getSigner();
-    return new PayrollContract(signer);
+    try {
+      const wallet = wallets[0];
+      await wallet.switchChain(534351);
+      const ethereumProvider = await wallet.getEthereumProvider();
+      
+      // Create provider without ENS support (Scroll Sepolia doesn't support ENS)
+      const provider = new BrowserProvider(ethereumProvider, {
+        chainId: 534351,
+        name: 'scroll-sepolia',
+        ensAddress: null as any, // Disable ENS
+      });
+      
+      const signer = await provider.getSigner();
+      return new PayrollContract(signer);
+    } catch (err: any) {
+      // If there's a network error, throw a more specific error
+      if (err.message?.includes('chainId') || err.message?.includes('network')) {
+        throw new Error('Unable to determine current chainId. Please ensure you are connected to Scroll Sepolia network.');
+      }
+      throw err;
+    }
   }, [isConnected, wallets]);
 
   const addEmployee = async (employeeAddress: string, arkivProfileHash: string) => {

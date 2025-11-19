@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { usePayroll } from '@/hooks/usePayroll';
 import AddEmployeeForm from './AddEmployeeForm';
+import AddInvoiceForm from './AddInvoiceForm';
 
 export default function AdminPanel() {
   const { isConnected, isAdmin: checkAdmin, getInvoiceTally } = usePayroll();
@@ -105,7 +106,10 @@ export default function AdminPanel() {
         )}
       </div>
 
-      <AddEmployeeForm />
+      <div className="grid md:grid-cols-2 gap-6">
+        <AddEmployeeForm />
+        <AddInvoiceForm />
+      </div>
     </div>
   );
 }

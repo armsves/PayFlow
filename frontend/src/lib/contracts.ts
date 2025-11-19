@@ -52,7 +52,9 @@ export class PayrollContract {
   }
 
   async addEmployee(employeeAddress: string, arkivProfileHash: string) {
-    const tx = await this.contract.addEmployee(employeeAddress, arkivProfileHash);
+    // Ensure address is checksummed to avoid ENS resolution
+    const checksummedAddress = ethers.getAddress(employeeAddress);
+    const tx = await this.contract.addEmployee(checksummedAddress, arkivProfileHash);
     return await tx.wait();
   }
 
@@ -63,10 +65,13 @@ export class PayrollContract {
     arkivDataHash: string,
     chainId: number
   ) {
+    // Ensure addresses are checksummed to avoid ENS resolution
+    const checksummedEmployee = ethers.getAddress(employeeAddress);
+    const checksummedToken = ethers.getAddress(tokenAddress);
     const tx = await this.contract.createInvoice(
-      employeeAddress,
+      checksummedEmployee,
       amount,
-      tokenAddress,
+      checksummedToken,
       arkivDataHash,
       chainId
     );
@@ -80,7 +85,8 @@ export class PayrollContract {
   }
 
   async getEmployee(address: string): Promise<Employee> {
-    const employee = await this.contract.employees(address);
+    const checksummedAddress = ethers.getAddress(address);
+    const employee = await this.contract.employees(checksummedAddress);
     return {
       walletAddress: employee.walletAddress,
       arkivProfileHash: employee.arkivProfileHash,
@@ -105,7 +111,8 @@ export class PayrollContract {
   }
 
   async getEmployeeInvoices(address: string): Promise<bigint[]> {
-    return await this.contract.getEmployeeInvoices(address);
+    const checksummedAddress = ethers.getAddress(address);
+    return await this.contract.getEmployeeInvoices(checksummedAddress);
   }
 
   async getInvoiceTally() {
@@ -118,21 +125,25 @@ export class PayrollContract {
   }
 
   async hasRole(role: string, address: string): Promise<boolean> {
-    return await this.contract.hasRole(role, address);
+    const checksummedAddress = ethers.getAddress(address);
+    return await this.contract.hasRole(role, checksummedAddress);
   }
 
   async isAdmin(address: string): Promise<boolean> {
+    const checksummedAddress = ethers.getAddress(address);
     const adminRole = await this.contract.ADMIN_ROLE();
-    return await this.contract.hasRole(adminRole, address);
+    return await this.contract.hasRole(adminRole, checksummedAddress);
   }
 
   async updateEmployeeStatus(employeeAddress: string, active: boolean) {
-    const tx = await this.contract.updateEmployeeStatus(employeeAddress, active);
+    const checksummedAddress = ethers.getAddress(employeeAddress);
+    const tx = await this.contract.updateEmployeeStatus(checksummedAddress, active);
     return await tx.wait();
   }
 
   async grantRole(role: string, address: string) {
-    const tx = await this.contract.grantRole(role, address);
+    const checksummedAddress = ethers.getAddress(address);
+    const tx = await this.contract.grantRole(role, checksummedAddress);
     return await tx.wait();
   }
 }
