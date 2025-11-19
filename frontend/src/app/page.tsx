@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import EmployeeList from '@/components/EmployeeList';
-import { ArkivService } from '@/lib/arkiv';
+import { Employee } from '@/lib/arkiv';
 
 export default function Home() {
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,8 +14,12 @@ export default function Home() {
 
   const loadEmployees = async () => {
     try {
-      const arkiv = new ArkivService(process.env.NEXT_PUBLIC_ARKIV_API_KEY || '');
-      const data = await arkiv.getAllEmployees();
+      // Call the serverless API instead of exposing private key
+      const response = await fetch('/api/arkiv/employees');
+      if (!response.ok) {
+        throw new Error('Failed to fetch employees');
+      }
+      const data = await response.json();
       setEmployees(data);
     } catch (error) {
       console.error('Failed to load employees:', error);
