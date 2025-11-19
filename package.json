@@ -1,0 +1,22 @@
+{
+  "name": "payflow",
+  "version": "1.0.0",
+  "description": "Cross-Chain Payroll Platform for ETH Argentina Hackathon",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:scroll": "hardhat run scripts/deploy.ts --network scroll-sepolia",
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@types/node": "^20.0.0",
+    "hardhat": "^2.19.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "ethers": "^6.9.0"
+  }
+}
