@@ -9,8 +9,6 @@ export default function AddEmployeeForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('');
-  const [salary, setSalary] = useState('');
-  const [chainPreference, setChainPreference] = useState('Scroll');
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -18,22 +16,30 @@ export default function AddEmployeeForm() {
     setSuccess(false);
 
     try {
+      // Get the next employee number (count current employees)
+      const employeesResponse = await fetch('/api/arkiv/employees');
+      const employees = await employeesResponse.json();
+      const employeeNumber = employees.length;
+
       // First, add employee to Arkiv via API
       const response = await fetch('/api/arkiv/employees', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          employeeNumber,
           walletAddress,
           name,
           email,
           role,
-          salary: parseFloat(salary),
-          chainPreference
+          active: true,
+          totalPaid: 0,
+          invoiceCount: 0,
         })
       });
 
       if (!response.ok) {
-        throw new Error('Failed to add employee to Arkiv');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to add employee to Arkiv');
       }
 
       const employee = await response.json();
@@ -47,8 +53,6 @@ export default function AddEmployeeForm() {
       setName('');
       setEmail('');
       setRole('');
-      setSalary('');
-      setChainPreference('Scroll');
 
       setTimeout(() => setSuccess(false), 3000);
     } catch (err: any) {
@@ -122,38 +126,6 @@ export default function AddEmployeeForm() {
           required
           className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
-          Monthly Salary (USD)
-        </label>
-        <input
-          type="number"
-          value={salary}
-          onChange={(e) => setSalary(e.target.value)}
-          placeholder="5000"
-          required
-          min="0"
-          step="0.01"
-          className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
-          Chain Preference
-        </label>
-        <select
-          value={chainPreference}
-          onChange={(e) => setChainPreference(e.target.value)}
-          className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="Scroll">Scroll</option>
-          <option value="Polygon">Polygon</option>
-          <option value="Arbitrum">Arbitrum</option>
-          <option value="Optimism">Optimism</option>
-        </select>
       </div>
 
       {error && (

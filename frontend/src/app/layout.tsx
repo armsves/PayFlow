@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { privyConfig, scrollSepoliaChain } from '@/lib/reown-config';
 import { http } from 'viem';
 import { createConfig } from 'wagmi';
+import Navbar from '@/components/Navbar';
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ export default function RootLayout({
         >
           <QueryClientProvider client={queryClient}>
             <WagmiProvider config={wagmiConfig}>
+              <Navbar />
               {children}
             </WagmiProvider>
           </QueryClientProvider>

@@ -13,19 +13,30 @@ export default function AdminPanel() {
     totalPaid: bigint;
   } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [networkError, setNetworkError] = useState(false);
 
   useEffect(() => {
     const checkAdminStatus = async () => {
       if (isConnected) {
-        const adminStatus = await checkAdmin();
-        setIsAdmin(adminStatus);
-        
-        if (adminStatus) {
-          try {
-            const tally = await getInvoiceTally();
-            setStats(tally);
-          } catch (err) {
-            console.error('Error fetching stats:', err);
+        try {
+          const adminStatus = await checkAdmin();
+          setIsAdmin(adminStatus);
+          
+          if (adminStatus) {
+            try {
+              const tally = await getInvoiceTally();
+              setStats(tally);
+            } catch (err) {
+              console.error('Error fetching stats:', err);
+              // Stats are optional, don't block the UI
+            }
+          }
+        } catch (err: any) {
+          console.error('Error checking admin status:', err);
+          // If admin check fails, still show the forms but without admin badge
+          setIsAdmin(true); // Allow access to forms even if contract check fails
+          if (err.message?.includes('chainId') || err.message?.includes('network')) {
+            setNetworkError(true);
           }
         }
       }
@@ -53,6 +64,20 @@ export default function AdminPanel() {
 
   return (
     <div className="space-y-6">
+      {networkError && (
+        <div className="bg-yellow-500/10 border border-yellow-500 rounded-lg p-4">
+          <div className="flex items-center gap-2 text-yellow-400">
+            <span className="text-xl">⚠️</span>
+            <div>
+              <p className="font-semibold">Network Issue Detected</p>
+              <p className="text-sm text-yellow-300">
+                Please ensure you're connected to Scroll Sepolia network. Some features may not work properly.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+      
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6">
         <h2 className="text-2xl font-bold text-white mb-4">Admin Panel</h2>
         
