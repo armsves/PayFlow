@@ -37,7 +37,13 @@ export default function Navbar() {
               href="/bridge"
               className="text-slate-300 hover:text-white transition font-medium"
             >
-              Bridge
+              LiFi Bridge
+            </Link>
+            <Link
+              href="/wormhole"
+              className="text-slate-300 hover:text-white transition font-medium"
+            >
+              Wormhole
             </Link>
             <ConnectWallet />
           </div>
