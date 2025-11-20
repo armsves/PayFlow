@@ -6,14 +6,12 @@ import {
   getRoutes,
   getQuote,
   executeRoute,
-  getChains,
-  getTokens,
   type Route,
   type QuoteRequest,
   type RoutesRequest,
 } from '@lifi/sdk';
-import { initializeLiFi, SUPPORTED_CHAINS, CHAIN_NAMES } from '@/lib/lifi-config';
-import { formatUnits, parseUnits } from 'viem';
+import { initializeLiFi, configureLiFiProviders, SUPPORTED_CHAINS, CHAIN_NAMES } from '@/lib/lifi-config';
+import { formatUnits, parseUnits, type Address } from 'viem';
 
 // Common token addresses for testing
 const COMMON_TOKENS: Record<number, Array<{ address: string; symbol: string; decimals: number }>> = {
@@ -74,11 +72,18 @@ export default function BridgePage() {
 
   // Get wallet address
   useEffect(() => {
+    console.log('Wallets:', wallets);
     if (wallets && wallets.length > 0) {
-      const embeddedWallet = wallets.find(w => w.walletClientType === 'privy');
+      // Try to find any connected wallet
+      const embeddedWallet = wallets.find(w => w.walletClientType === 'privy') || wallets[0];
+      console.log('Selected wallet:', embeddedWallet);
       if (embeddedWallet?.address) {
         setWalletAddress(embeddedWallet.address);
+        console.log('Wallet address set:', embeddedWallet.address);
       }
+    } else {
+      console.log('No wallets found');
+      setWalletAddress('');
     }
   }, [wallets]);
 
@@ -169,19 +174,44 @@ export default function BridgePage() {
       return;
     }
 
+    if (!wallets || wallets.length === 0) {
+      setError('No wallet connected');
+      return;
+    }
+
     setIsLoading(true);
     setError('');
-    setExecutionStatus('Executing route...');
+    setExecutionStatus('Configuring provider...');
     setTxHash('');
 
     try {
+      // Get the connected wallet
+      const wallet = wallets.find(w => w.walletClientType === 'privy') || wallets[0];
+
+      // Get the Ethereum provider from the wallet
+      const provider = await wallet.getEthereumProvider();
+
+      if (!provider) {
+        throw new Error('Failed to get Ethereum provider from wallet');
+      }
+
+      // Configure LI.FI providers with the connected wallet
+      await configureLiFiProviders(
+        wallet.address as Address,
+        provider,
+        fromChain
+      );
+
+      console.log('LI.FI providers configured successfully');
+      setExecutionStatus('Executing route...');
+
       const executedRoute = await executeRoute(selectedRoute, {
-        updateRouteHook: (updatedRoute) => {
+        updateRouteHook: (updatedRoute: Route) => {
           console.log('Route update:', updatedRoute);
 
           // Extract transaction hash if available
-          updatedRoute.steps.forEach((step) => {
-            step.execution?.process.forEach((process) => {
+          updatedRoute.steps.forEach((step: any) => {
+            step.execution?.process.forEach((process: any) => {
               if (process.txHash) {
                 setTxHash(process.txHash);
                 setExecutionStatus(`Transaction: ${process.txHash}`);
@@ -192,7 +222,7 @@ export default function BridgePage() {
             });
           });
         },
-        acceptExchangeRateUpdateHook: async (params) => {
+        acceptExchangeRateUpdateHook: async (params: any) => {
           console.log('Exchange rate update:', params);
           // Auto-accept for demo purposes
           return true;
@@ -391,12 +421,22 @@ export default function BridgePage() {
               </div>
 
               {/* Wallet Address Display */}
-              {walletAddress && (
-                <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center gap-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <p className="text-sm text-blue-200/60">Connected: <span className="text-white font-mono ml-2">{walletAddress}</span></p>
-                </div>
-              )}
+              <div className={`p-4 rounded-xl border flex items-center gap-3 ${
+                walletAddress
+                  ? 'bg-green-500/5 border-green-500/20'
+                  : 'bg-red-500/5 border-red-500/20'
+              }`}>
+                <div className={`w-2 h-2 rounded-full ${
+                  walletAddress ? 'bg-green-500 animate-pulse' : 'bg-red-500'
+                }`}></div>
+                <p className="text-sm text-blue-200/60">
+                  {walletAddress ? (
+                    <>Connected: <span className="text-white font-mono ml-2">{walletAddress}</span></>
+                  ) : (
+                    <>Not connected - Please click "Connect Wallet" in the navbar</>
+                  )}
+                </p>
+              </div>
 
               {/* Action Buttons */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
