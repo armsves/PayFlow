@@ -46,19 +46,48 @@ export default function AdminPanel() {
   }, [isConnected, checkAdmin, getInvoiceTally]);
 
   if (!isConnected) {
-    return null;
+    return (
+      <div className="glass-panel p-8 sm:p-12 text-center">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl sm:text-5xl">
+          🔐
+        </div>
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Wallet Not Connected</h3>
+        <p className="text-blue-200/60 text-sm sm:text-base mb-6 max-w-md mx-auto">
+          Please connect your wallet using the "Connect Wallet" button in the navigation bar to access the admin panel.
+        </p>
+      </div>
+    );
   }
 
   if (loading) {
     return (
-      <div className="glass-panel p-8 text-center">
-        <div className="animate-pulse text-blue-200/60">Checking admin status...</div>
+      <div className="glass-panel p-8 sm:p-12 text-center">
+        <div className="animate-spin w-10 h-10 sm:w-12 sm:h-12 border-3 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+        <p className="text-blue-200/60 text-sm sm:text-base">Checking admin status...</p>
       </div>
     );
   }
 
   if (!isAdmin) {
-    return null;
+    return (
+      <div className="glass-panel p-8 sm:p-12 text-center">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl sm:text-5xl">
+          ⛔
+        </div>
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Access Restricted</h3>
+        <p className="text-blue-200/60 text-sm sm:text-base mb-6 max-w-md mx-auto">
+          This page is only accessible to administrators. Your wallet address does not have admin privileges for this payroll system.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+          <a
+            href="/dashboard"
+            className="glass-button px-6 py-3 rounded-xl font-semibold text-sm inline-block"
+          >
+            View Dashboard
+          </a>
+        </div>
+      </div>
+    );
   }
 
   return (

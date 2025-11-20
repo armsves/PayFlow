@@ -11,7 +11,7 @@ import {
   type WormholeNetwork,
   type TokenInfo,
 } from '@/lib/wormhole-config';
-import { parseUnits, formatUnits } from 'viem';
+import { parseUnits } from 'viem';
 
 type TransferType = 'token' | 'cctp';
 type TransferMode = 'manual' | 'automatic';
