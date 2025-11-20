@@ -211,53 +211,57 @@ export default function WormholePage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-8">
-      <div className="container mx-auto px-4">
+    <main className="min-h-screen pb-20 relative">
+      {/* Decorative Glows */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] opacity-20 pointer-events-none blur-[120px] bg-pink-600/40"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] opacity-20 pointer-events-none blur-[120px] bg-purple-600/40"></div>
+
+      <div className="container mx-auto px-4 py-8 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Wormhole Bridge
-              </span>
+          <div className="text-center mb-12">
+            <h1 className="text-5xl font-bold mb-4 tracking-tight text-white">
+              Wormhole Bridge
             </h1>
-            <p className="text-slate-400 text-lg">
+            <p className="text-blue-200/60 text-lg max-w-lg mx-auto">
               Cross-chain token transfers powered by Wormhole
             </p>
           </div>
 
           {/* Test Buttons Section */}
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 mb-6">
-            <h2 className="text-xl font-semibold text-white mb-4">Quick Test Scenarios</h2>
+          <div className="glass-panel p-8 mb-8">
+            <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+              <span className="text-xl">🧪</span> Quick Test Scenarios
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <button
                 onClick={testAvalancheToSepolia}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-medium transition"
+                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-purple-500/10 border-purple-500/20 hover:bg-purple-500/20"
               >
-                Test: AVAX → Sepolia (Manual)
+                AVAX → Sepolia (Manual)
               </button>
               <button
                 onClick={testSepoliaToAvalanche}
-                className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-3 rounded-lg font-medium transition"
+                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-pink-500/10 border-pink-500/20 hover:bg-pink-500/20"
               >
-                Test: Sepolia → AVAX (Auto)
+                Sepolia → AVAX (Auto)
               </button>
               <button
                 onClick={testSolanaToSepolia}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-lg font-medium transition"
+                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-indigo-500/10 border-indigo-500/20 hover:bg-indigo-500/20"
               >
-                Test: SOL → Sepolia
+                SOL → Sepolia
               </button>
             </div>
           </div>
 
           {/* Configuration Section */}
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 mb-6">
-            <h2 className="text-xl font-semibold text-white mb-4">Transfer Configuration</h2>
+          <div className="glass-panel p-8 mb-8">
+            <h2 className="text-xl font-semibold text-white mb-6">Transfer Configuration</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
+                <label className="block text-sm font-medium text-blue-200/60 mb-2">
                   Network
                 </label>
                 <select
@@ -266,188 +270,207 @@ export default function WormholePage() {
                     setNetwork(e.target.value as WormholeNetwork);
                     setIsInitialized(false);
                   }}
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-purple-400"
+                  className="glass-input w-full px-4 py-3 text-white cursor-pointer"
                 >
-                  <option value="Testnet">Testnet</option>
-                  <option value="Mainnet">Mainnet</option>
-                  <option value="Devnet">Devnet</option>
+                  <option value="Testnet" className="bg-slate-900">Testnet</option>
+                  <option value="Mainnet" className="bg-slate-900">Mainnet</option>
+                  <option value="Devnet" className="bg-slate-900">Devnet</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
+                <label className="block text-sm font-medium text-blue-200/60 mb-2">
                   Transfer Type
                 </label>
                 <select
                   value={transferType}
                   onChange={(e) => setTransferType(e.target.value as TransferType)}
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-purple-400"
+                  className="glass-input w-full px-4 py-3 text-white cursor-pointer"
                 >
-                  <option value="token">Token Bridge (WTT)</option>
-                  <option value="cctp">Circle CCTP (USDC)</option>
+                  <option value="token" className="bg-slate-900">Token Bridge (WTT)</option>
+                  <option value="cctp" className="bg-slate-900">Circle CCTP (USDC)</option>
                 </select>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-blue-200/60 mb-2">
                 Transfer Mode
               </label>
-              <div className="flex gap-4">
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    value="manual"
-                    checked={transferMode === 'manual'}
-                    onChange={(e) => setTransferMode(e.target.value as TransferMode)}
-                    className="mr-2"
-                  />
-                  <span className="text-white">Manual (requires attestation)</span>
-                </label>
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    value="automatic"
-                    checked={transferMode === 'automatic'}
-                    onChange={(e) => setTransferMode(e.target.value as TransferMode)}
-                    className="mr-2"
-                  />
-                  <span className="text-white">Automatic (uses relayer)</span>
-                </label>
+              <div className="flex gap-4 bg-black/20 p-2 rounded-xl inline-flex border border-white/5">
+                <button
+                   onClick={() => setTransferMode('manual')}
+                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                     transferMode === 'manual' 
+                       ? 'bg-white/10 text-white shadow-lg' 
+                       : 'text-blue-200/40 hover:text-white'
+                   }`}
+                >
+                  Manual
+                </button>
+                <button
+                   onClick={() => setTransferMode('automatic')}
+                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                     transferMode === 'automatic' 
+                       ? 'bg-white/10 text-white shadow-lg' 
+                       : 'text-blue-200/40 hover:text-white'
+                   }`}
+                >
+                  Automatic
+                </button>
               </div>
             </div>
           </div>
 
           {/* Bridge Form */}
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 mb-6">
-            <div className="space-y-6">
+          <div className="glass-panel p-8 mb-8 relative overflow-hidden">
+            <div className="relative z-10 space-y-8">
               {/* From Section */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  From Chain
-                </label>
-                <select
-                  value={fromChain}
-                  onChange={(e) => setFromChain(e.target.value)}
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-purple-400"
-                >
-                  {availableChains.map((chain) => (
-                    <option key={chain} value={chain}>
-                      {formatChainName(chain)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  From Token
-                </label>
-                <select
-                  value={fromToken}
-                  onChange={(e) => setFromToken(e.target.value)}
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-purple-400"
-                >
-                  {getTokensForChain(fromChain).map((token) => (
-                    <option key={token.address} value={token.address}>
-                      {token.symbol}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Amount */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  Amount
-                </label>
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder="0.0"
-                  step="0.001"
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-purple-400"
-                />
-              </div>
-
-              {/* Native Gas (for automatic transfers) */}
-              {transferMode === 'automatic' && (
-                <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Native Gas Drop-off (optional)
-                  </label>
-                  <input
-                    type="number"
-                    value={nativeGas}
-                    onChange={(e) => setNativeGas(e.target.value)}
-                    placeholder="0.0"
-                    step="0.001"
-                    className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-purple-400"
-                  />
-                  <p className="text-xs text-slate-400 mt-1">
-                    Amount of native gas to deliver to destination address
-                  </p>
+              <div className="bg-black/20 rounded-2xl p-6 border border-white/5">
+                <div className="flex justify-between items-center mb-4">
+                   <span className="text-xs uppercase tracking-widest text-pink-200/50 font-bold">From</span>
                 </div>
-              )}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                      Chain
+                    </label>
+                    <select
+                      value={fromChain}
+                      onChange={(e) => setFromChain(e.target.value)}
+                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                    >
+                      {availableChains.map((chain) => (
+                        <option key={chain} value={chain} className="bg-slate-900">
+                          {formatChainName(chain)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                      Token
+                    </label>
+                    <select
+                      value={fromToken}
+                      onChange={(e) => setFromToken(e.target.value)}
+                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                    >
+                      {getTokensForChain(fromChain).map((token) => (
+                        <option key={token.address} value={token.address} className="bg-slate-900">
+                          {token.symbol}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="mt-6">
+                  <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                    Amount
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      placeholder="0.0"
+                      step="0.001"
+                      className="glass-input w-full pl-4 pr-16 py-4 text-2xl font-light text-white placeholder-white/10 bg-transparent border-none focus:ring-0 focus:bg-white/5 transition-colors"
+                    />
+                  </div>
+                </div>
+                
+                {/* Native Gas (for automatic transfers) */}
+                {transferMode === 'automatic' && (
+                  <div className="mt-6 pt-6 border-t border-white/5">
+                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                      Native Gas Drop-off (optional)
+                    </label>
+                    <input
+                      type="number"
+                      value={nativeGas}
+                      onChange={(e) => setNativeGas(e.target.value)}
+                      placeholder="0.0"
+                      step="0.001"
+                      className="glass-input w-full px-4 py-3 text-white"
+                    />
+                    <p className="text-xs text-blue-200/40 mt-2">
+                      Amount of native gas to deliver to destination address
+                    </p>
+                  </div>
+                )}
+              </div>
 
               {/* Separator */}
-              <div className="flex justify-center">
-                <div className="bg-slate-700 p-2 rounded-full">
-                  <svg className="w-6 h-6 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex justify-center -my-6 relative z-20">
+                 <div className="glass-panel p-3 rounded-full shadow-lg border-white/20 bg-slate-900">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
                 </div>
               </div>
 
               {/* To Section */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  To Chain
-                </label>
-                <select
-                  value={toChain}
-                  onChange={(e) => setToChain(e.target.value)}
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-purple-400"
-                >
-                  {availableChains.map((chain) => (
-                    <option key={chain} value={chain}>
-                      {formatChainName(chain)}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <div className="bg-black/20 rounded-2xl p-6 border border-white/5 pt-8">
+                 <div className="flex justify-between items-center mb-4">
+                   <span className="text-xs uppercase tracking-widest text-purple-200/50 font-bold">To</span>
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                      Chain
+                    </label>
+                    <select
+                      value={toChain}
+                      onChange={(e) => setToChain(e.target.value)}
+                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                    >
+                      {availableChains.map((chain) => (
+                        <option key={chain} value={chain} className="bg-slate-900">
+                          {formatChainName(chain)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  To Token
-                </label>
-                <select
-                  value={toToken}
-                  onChange={(e) => setToToken(e.target.value)}
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-purple-400"
-                >
-                  {getTokensForChain(toChain).map((token) => (
-                    <option key={token.address} value={token.address}>
-                      {token.symbol}
-                    </option>
-                  ))}
-                </select>
+                  <div>
+                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                      Token
+                    </label>
+                    <select
+                      value={toToken}
+                      onChange={(e) => setToToken(e.target.value)}
+                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                    >
+                      {getTokensForChain(toChain).map((token) => (
+                        <option key={token.address} value={token.address} className="bg-slate-900">
+                          {token.symbol}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
               </div>
 
               {/* Wallet Address Display */}
               {walletAddress && (
-                <div className="bg-slate-700/50 p-4 rounded-lg">
-                  <p className="text-sm text-slate-400">Connected Wallet</p>
-                  <p className="text-white font-mono text-sm break-all">{walletAddress}</p>
+                <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center gap-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <p className="text-sm text-blue-200/60">Connected: <span className="text-white font-mono ml-2">{walletAddress}</span></p>
                 </div>
               )}
 
               {/* SDK Status */}
-              <div className="bg-slate-700/50 p-4 rounded-lg">
-                <p className="text-sm text-slate-400">Wormhole SDK Status</p>
-                <p className={`text-sm font-semibold ${isInitialized ? 'text-green-400' : 'text-yellow-400'}`}>
-                  {isInitialized ? `✓ Initialized on ${network}` : 'Initializing...'}
+              <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center justify-between">
+                <p className="text-sm text-blue-200/60">Wormhole SDK Status</p>
+                <p className={`text-sm font-semibold flex items-center gap-2 ${isInitialized ? 'text-green-400' : 'text-yellow-400'}`}>
+                  {isInitialized ? (
+                    <>✓ Initialized on {network}</>
+                  ) : (
+                    <>⟳ Initializing...</>
+                  )}
                 </p>
               </div>
 
@@ -456,14 +479,14 @@ export default function WormholePage() {
                 <button
                   onClick={handleGetChainInfo}
                   disabled={isLoading || !isInitialized}
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-button py-4 rounded-xl font-semibold text-white shadow-lg bg-gradient-to-r from-purple-600/80 to-pink-600/80 hover:from-purple-500 hover:to-pink-500 border-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Loading...' : 'Get Chain Info'}
                 </button>
                 <button
                   onClick={handlePrepareTransfer}
                   disabled={isLoading || !isInitialized || !walletAddress}
-                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-button py-4 rounded-xl font-semibold text-white shadow-lg bg-gradient-to-r from-green-600/80 to-emerald-600/80 hover:from-green-500 hover:to-emerald-500 border-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Preparing...' : 'Prepare Transfer'}
                 </button>
@@ -473,31 +496,49 @@ export default function WormholePage() {
 
           {/* Error Display */}
           {error && (
-            <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-lg mb-6">
-              <p className="font-semibold">Error:</p>
-              <p>{error}</p>
+            <div className="glass-panel p-6 border-l-4 border-red-500 bg-red-500/10 mb-6">
+              <p className="font-semibold text-red-200">Error</p>
+              <p className="text-red-200/70 text-sm mt-1">{error}</p>
             </div>
           )}
 
           {/* Chain Info Display */}
           {chainInfo && (
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 mb-6">
-              <h2 className="text-xl font-semibold text-white mb-4">Chain Information</h2>
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-purple-400 mb-2">Source Chain</h3>
-                  <div className="space-y-2 text-sm">
-                    <p className="text-slate-300">Name: <span className="text-white">{chainInfo.sourceChain.name}</span></p>
-                    <p className="text-slate-300">Chain ID: <span className="text-white">{chainInfo.sourceChain.chainId}</span></p>
-                    <p className="text-slate-300">RPC: <span className="text-white font-mono text-xs">{chainInfo.sourceChain.rpc}</span></p>
+            <div className="glass-panel p-8 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <h2 className="text-xl font-semibold text-white mb-6">Chain Information</h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-black/20 p-6 rounded-2xl border border-purple-500/20">
+                  <h3 className="text-lg font-semibold text-purple-400 mb-4 border-b border-white/5 pb-2">Source Chain</h3>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between">
+                        <span className="text-blue-200/60">Name</span>
+                        <span className="text-white font-medium">{chainInfo.sourceChain.name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-blue-200/60">Chain ID</span>
+                        <span className="text-white font-mono">{chainInfo.sourceChain.chainId}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-blue-200/60">RPC</span>
+                        <span className="text-white/50 font-mono text-xs truncate max-w-[150px]">{chainInfo.sourceChain.rpc}</span>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-pink-400 mb-2">Destination Chain</h3>
-                  <div className="space-y-2 text-sm">
-                    <p className="text-slate-300">Name: <span className="text-white">{chainInfo.destinationChain.name}</span></p>
-                    <p className="text-slate-300">Chain ID: <span className="text-white">{chainInfo.destinationChain.chainId}</span></p>
-                    <p className="text-slate-300">RPC: <span className="text-white font-mono text-xs">{chainInfo.destinationChain.rpc}</span></p>
+                <div className="bg-black/20 p-6 rounded-2xl border border-pink-500/20">
+                  <h3 className="text-lg font-semibold text-pink-400 mb-4 border-b border-white/5 pb-2">Destination Chain</h3>
+                  <div className="space-y-3 text-sm">
+                     <div className="flex justify-between">
+                        <span className="text-blue-200/60">Name</span>
+                        <span className="text-white font-medium">{chainInfo.destinationChain.name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-blue-200/60">Chain ID</span>
+                        <span className="text-white font-mono">{chainInfo.destinationChain.chainId}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-blue-200/60">RPC</span>
+                        <span className="text-white/50 font-mono text-xs truncate max-w-[150px]">{chainInfo.destinationChain.rpc}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -506,28 +547,33 @@ export default function WormholePage() {
 
           {/* Execution Status */}
           {executionStatus && (
-            <div className="bg-blue-500/10 border border-blue-500 text-blue-400 p-4 rounded-lg mb-6">
-              <p className="font-semibold mb-2">Transfer Details:</p>
-              <pre className="text-xs bg-slate-900 p-4 rounded overflow-auto">
+            <div className="glass-panel p-6 border-l-4 border-blue-500 bg-blue-500/10 mb-6">
+              <p className="font-semibold text-blue-200 mb-4">Transfer Details</p>
+              <pre className="text-[10px] bg-black/40 p-4 rounded-xl overflow-auto text-blue-200/60 font-mono border border-white/5">
                 {executionStatus}
               </pre>
             </div>
           )}
 
           {/* Info Box */}
-          <div className="bg-purple-500/10 border border-purple-500 text-purple-300 p-4 rounded-lg">
-            <p className="font-semibold mb-2">ℹ️ Implementation Note:</p>
-            <p className="text-sm">
-              This page demonstrates the Wormhole SDK integration with basic functionality.
-              The SDK is successfully initialized and can retrieve chain information and prepare
-              transfer parameters. To complete the full transfer implementation, you'll need to:
-            </p>
-            <ul className="list-disc list-inside text-sm mt-2 space-y-1">
-              <li>Integrate wallet signing capabilities (Privy/Web3 wallet)</li>
-              <li>Implement the transfer initiation logic</li>
-              <li>Add VAA (Verified Action Approval) fetching for manual transfers</li>
-              <li>Implement transfer completion on the destination chain</li>
-            </ul>
+          <div className="glass-panel p-6 border border-purple-500/30 bg-purple-500/5">
+            <div className="flex items-start gap-3">
+                <div className="text-2xl">ℹ️</div>
+                <div>
+                    <p className="font-semibold text-purple-200 mb-2">Implementation Note</p>
+                    <p className="text-sm text-purple-200/70 mb-2 leading-relaxed">
+                    This page demonstrates the Wormhole SDK integration with basic functionality.
+                    The SDK is successfully initialized and can retrieve chain information and prepare
+                    transfer parameters. To complete the full transfer implementation, you'll need to:
+                    </p>
+                    <ul className="list-disc list-inside text-sm text-purple-200/60 space-y-1 ml-2">
+                    <li>Integrate wallet signing capabilities (Privy/Web3 wallet)</li>
+                    <li>Implement the transfer initiation logic</li>
+                    <li>Add VAA (Verified Action Approval) fetching for manual transfers</li>
+                    <li>Implement transfer completion on the destination chain</li>
+                    </ul>
+                </div>
+            </div>
           </div>
         </div>
       </div>

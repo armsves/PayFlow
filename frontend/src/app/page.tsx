@@ -4,38 +4,42 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      <div className="container mx-auto px-4 py-16">
+    <main className="min-h-screen relative overflow-hidden">
+      {/* Decorative Glows */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[800px] opacity-30 pointer-events-none" style={{ background: 'var(--primary-glow)' }}></div>
+
+      <div className="container mx-auto px-4 py-16 relative z-10">
         {/* Hero Section */}
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <div className="mb-8">
-            <div className="inline-block w-20 h-20 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center mb-6">
-              <span className="text-white font-bold text-4xl">₿</span>
+        <div className="max-w-4xl mx-auto text-center mb-24">
+          <div className="mb-12 relative">
+             <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full"></div>
+            <div className="relative inline-flex items-center justify-center w-24 h-24 mb-8 glass-panel rounded-3xl shadow-[0_0_50px_rgba(59,130,246,0.3)]">
+              <span className="text-white font-bold text-5xl drop-shadow-[0_2px_10px_rgba(255,255,255,0.3)]">₿</span>
             </div>
-            <h1 className="text-6xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <h1 className="text-7xl font-bold mb-6 tracking-tight">
+              <span className="bg-gradient-to-b from-white via-white to-white/50 bg-clip-text text-transparent drop-shadow-sm">
                 PayFlow
               </span>
             </h1>
-            <p className="text-2xl text-slate-300 mb-8">
+            <p className="text-2xl text-blue-100/80 mb-8 font-light tracking-wide">
               Cross-Chain Payroll Platform
             </p>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-blue-200/60 max-w-2xl mx-auto leading-relaxed">
               Streamline your global workforce payments with decentralized technology. 
               Manage employees, create invoices, and execute cross-chain payments seamlessly.
             </p>
           </div>
 
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-6 justify-center">
             <Link
               href="/dashboard"
-              className="bg-gradient-to-r from-primary to-accent text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-primary/50 transition transform hover:scale-105"
+              className="glass-button px-8 py-4 rounded-full font-semibold text-lg bg-white/10 hover:bg-white/20 border-white/20 hover:border-white/40 shadow-[0_0_30px_rgba(14,165,233,0.2)] hover:shadow-[0_0_50px_rgba(14,165,233,0.4)] backdrop-blur-xl"
             >
               View Dashboard
             </Link>
             <Link
               href="/manage"
-              className="bg-slate-800 text-white px-8 py-4 rounded-xl font-semibold text-lg border border-slate-700 hover:border-primary transition"
+              className="px-8 py-4 rounded-full font-semibold text-lg text-white/70 hover:text-white border border-white/5 hover:border-white/20 hover:bg-white/5 transition-all duration-300"
             >
               Manage Payroll
             </Link>
@@ -43,46 +47,32 @@ export default function Home() {
         </div>
 
         {/* Features Grid */}
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 mb-16">
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-primary transition">
-            <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
-              <span className="text-2xl">👥</span>
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 mb-24">
+          {[
+            { icon: '👥', title: 'Employee Management', desc: 'Add and manage employee records on-chain with decentralized storage via Arkiv Network.' },
+            { icon: '📄', title: 'Invoice Creation', desc: 'Generate and track invoices with smart contract integration and permanent storage.' },
+            { icon: '🌐', title: 'Cross-Chain Payments', desc: 'Execute payments across multiple blockchain networks with automated routing.' }
+          ].map((feature, i) => (
+            <div key={i} className="glass-panel p-8 hover:bg-white/5 transition-all duration-500 group">
+              <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-white/5 shadow-inner">
+                <span className="text-3xl filter drop-shadow-lg">{feature.icon}</span>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
+              <p className="text-blue-100/50 leading-relaxed">
+                {feature.desc}
+              </p>
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Employee Management</h3>
-            <p className="text-slate-400">
-              Add and manage employee records on-chain with decentralized storage via Arkiv Network.
-            </p>
-          </div>
-
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-primary transition">
-            <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
-              <span className="text-2xl">📄</span>
-            </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Invoice Creation</h3>
-            <p className="text-slate-400">
-              Generate and track invoices with smart contract integration and permanent storage.
-            </p>
-          </div>
-
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-primary transition">
-            <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
-              <span className="text-2xl">🌐</span>
-            </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Cross-Chain Payments</h3>
-            <p className="text-slate-400">
-              Execute payments across multiple blockchain networks with automated routing.
-            </p>
-          </div>
+          ))}
         </div>
 
         {/* Tech Stack */}
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-white mb-8">Built With</h2>
+          <h2 className="text-sm uppercase tracking-widest text-blue-200/40 font-bold mb-10">Powered By</h2>
           <div className="flex flex-wrap justify-center gap-4">
             {['Scroll', 'Arkiv', 'Privy', 'Wormhole', 'Crossmint', 'LiFi'].map((tech) => (
               <div
                 key={tech}
-                className="bg-slate-800/80 backdrop-blur-sm px-6 py-3 rounded-lg border border-slate-700 text-slate-300 font-medium"
+                className="px-6 py-3 rounded-full border border-white/5 bg-white/5 text-blue-100/60 font-medium hover:bg-white/10 hover:border-white/10 hover:text-white transition-all duration-300 cursor-default backdrop-blur-md"
               >
                 {tech}
               </div>

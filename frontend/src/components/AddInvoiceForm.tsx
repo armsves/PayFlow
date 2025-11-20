@@ -46,16 +46,13 @@ export default function AddInvoiceForm() {
     }
 
     try {
-      // Convert amount to wei (USDC has 6 decimals)
       const amountInWei = (parseFloat(amount) * 1_000_000).toString();
       const USDC_ADDRESS = '0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4'; // Scroll Sepolia USDC
 
-      // Get the next invoice number
       const invoicesResponse = await fetch('/api/arkiv/invoices/all');
       const invoices = await invoicesResponse.json();
       const invoiceNumber = invoices.length;
 
-      // First, add invoice to Arkiv via API
       const response = await fetch('/api/arkiv/invoices', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -79,7 +76,6 @@ export default function AddInvoiceForm() {
 
       const invoice = await response.json();
       
-      // Then add to blockchain (optional, if network is available)
       try {
         await createInvoice(
           employee.walletAddress,
@@ -93,7 +89,6 @@ export default function AddInvoiceForm() {
       }
       
       setSuccess(true);
-      // Reset form
       setSelectedEmployee('');
       setAmount('');
       setDescription('');
@@ -106,70 +101,82 @@ export default function AddInvoiceForm() {
 
   if (!isConnected) {
     return (
-      <div className="bg-slate-800 rounded-lg p-6 text-center">
-        <p className="text-slate-400">Connect your wallet to create invoices</p>
+      <div className="glass-panel p-8 text-center flex flex-col items-center justify-center min-h-[400px]">
+        <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4 text-3xl">🔒</div>
+        <p className="text-blue-200/60">Connect your wallet to create invoices</p>
       </div>
     );
   }
 
   if (loadingEmployees) {
     return (
-      <div className="bg-slate-800 rounded-lg p-6 text-center">
-        <p className="text-slate-400">Loading employees...</p>
+      <div className="glass-panel p-8 text-center flex flex-col items-center justify-center min-h-[400px]">
+        <div className="animate-spin w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full mb-4"></div>
+        <p className="text-blue-200/60">Loading employees...</p>
       </div>
     );
   }
 
   if (employees.length === 0) {
     return (
-      <div className="bg-slate-800 rounded-lg p-6 text-center">
-        <p className="text-slate-400">No employees found. Add an employee first.</p>
+      <div className="glass-panel p-8 text-center flex flex-col items-center justify-center min-h-[400px]">
+        <p className="text-blue-200/60">No employees found. Add an employee first.</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-slate-800 rounded-lg p-6 space-y-4">
-      <h3 className="text-xl font-semibold text-white mb-4">Create New Invoice</h3>
+    <form onSubmit={handleSubmit} className="glass-panel p-8 space-y-6">
+      <div className="flex items-center gap-3 mb-2">
+        <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400">
+          📄
+        </div>
+        <h3 className="text-xl font-semibold text-white">Create New Invoice</h3>
+      </div>
       
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
+        <label className="block text-xs uppercase tracking-wider font-semibold text-blue-200/60 mb-2 ml-1">
           Select Employee
         </label>
-        <select
-          value={selectedEmployee}
-          onChange={(e) => setSelectedEmployee(e.target.value)}
-          required
-          className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="">-- Select an employee --</option>
-          {employees.map((employee) => (
-            <option key={employee.id} value={employee.walletAddress}>
-              {employee.name} - {employee.role} ({employee.walletAddress.slice(0, 6)}...{employee.walletAddress.slice(-4)})
-            </option>
-          ))}
-        </select>
+        <div className="relative">
+          <select
+            value={selectedEmployee}
+            onChange={(e) => setSelectedEmployee(e.target.value)}
+            required
+            className="glass-input w-full px-4 py-3 text-white appearance-none cursor-pointer"
+          >
+            <option value="" className="bg-slate-900 text-slate-400">-- Select an employee --</option>
+            {employees.map((employee) => (
+              <option key={employee.id} value={employee.walletAddress} className="bg-slate-900">
+                {employee.name} - {employee.role}
+              </option>
+            ))}
+          </select>
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/50">▼</div>
+        </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
+        <label className="block text-xs uppercase tracking-wider font-semibold text-blue-200/60 mb-2 ml-1">
           Amount (USDC)
         </label>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="5000.00"
-          required
-          min="0"
-          step="0.01"
-          className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-xs text-slate-400 mt-1">Enter amount in USDC</p>
+        <div className="relative">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50">$</span>
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="5000.00"
+            required
+            min="0"
+            step="0.01"
+            className="glass-input w-full pl-8 pr-4 py-3 text-white placeholder-white/20"
+          />
+        </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
+        <label className="block text-xs uppercase tracking-wider font-semibold text-blue-200/60 mb-2 ml-1">
           Description
         </label>
         <textarea
@@ -178,18 +185,18 @@ export default function AddInvoiceForm() {
           placeholder="November 2025 Salary"
           required
           rows={3}
-          className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+          className="glass-input w-full px-4 py-3 text-white placeholder-white/20 resize-none"
         />
       </div>
 
       {error && (
-        <div className="bg-red-500/10 border border-red-500 rounded-lg p-3 text-red-400 text-sm">
+        <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-red-300 text-sm backdrop-blur-md">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="bg-green-500/10 border border-green-500 rounded-lg p-3 text-green-400 text-sm">
+        <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-green-300 text-sm backdrop-blur-md">
           Invoice created successfully!
         </div>
       )}
@@ -197,7 +204,7 @@ export default function AddInvoiceForm() {
       <button
         type="submit"
         disabled={loading || !selectedEmployee}
-        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg transition-colors"
+        className="glass-button w-full py-4 rounded-xl font-semibold text-white shadow-lg disabled:opacity-50 disabled:cursor-not-allowed mt-2"
       >
         {loading ? 'Creating Invoice...' : 'Create Invoice'}
       </button>

@@ -16,12 +16,10 @@ export default function AddEmployeeForm() {
     setSuccess(false);
 
     try {
-      // Get the next employee number (count current employees)
       const employeesResponse = await fetch('/api/arkiv/employees');
       const employees = await employeesResponse.json();
       const employeeNumber = employees.length;
 
-      // First, add employee to Arkiv via API
       const response = await fetch('/api/arkiv/employees', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -44,11 +42,9 @@ export default function AddEmployeeForm() {
 
       const employee = await response.json();
       
-      // Then add to blockchain
       await addEmployee(walletAddress, employee.id);
       
       setSuccess(true);
-      // Reset form
       setWalletAddress('');
       setName('');
       setEmail('');
@@ -62,18 +58,24 @@ export default function AddEmployeeForm() {
 
   if (!isConnected) {
     return (
-      <div className="bg-slate-800 rounded-lg p-6 text-center">
-        <p className="text-slate-400">Connect your wallet to add employees</p>
+      <div className="glass-panel p-8 text-center flex flex-col items-center justify-center min-h-[400px]">
+        <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4 text-3xl">🔒</div>
+        <p className="text-blue-200/60">Connect your wallet to add employees</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-slate-800 rounded-lg p-6 space-y-4">
-      <h3 className="text-xl font-semibold text-white mb-4">Add New Employee</h3>
+    <form onSubmit={handleSubmit} className="glass-panel p-8 space-y-6">
+      <div className="flex items-center gap-3 mb-2">
+        <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400">
+          👤
+        </div>
+        <h3 className="text-xl font-semibold text-white">Add New Employee</h3>
+      </div>
       
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
+        <label className="block text-xs uppercase tracking-wider font-semibold text-blue-200/60 mb-2 ml-1">
           Wallet Address
         </label>
         <input
@@ -82,12 +84,12 @@ export default function AddEmployeeForm() {
           onChange={(e) => setWalletAddress(e.target.value)}
           placeholder="0x..."
           required
-          className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="glass-input w-full px-4 py-3 text-white placeholder-white/20"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
+        <label className="block text-xs uppercase tracking-wider font-semibold text-blue-200/60 mb-2 ml-1">
           Full Name
         </label>
         <input
@@ -96,12 +98,12 @@ export default function AddEmployeeForm() {
           onChange={(e) => setName(e.target.value)}
           placeholder="John Doe"
           required
-          className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="glass-input w-full px-4 py-3 text-white placeholder-white/20"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
+        <label className="block text-xs uppercase tracking-wider font-semibold text-blue-200/60 mb-2 ml-1">
           Email
         </label>
         <input
@@ -110,12 +112,12 @@ export default function AddEmployeeForm() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="john@example.com"
           required
-          className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="glass-input w-full px-4 py-3 text-white placeholder-white/20"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
+        <label className="block text-xs uppercase tracking-wider font-semibold text-blue-200/60 mb-2 ml-1">
           Role
         </label>
         <input
@@ -124,18 +126,18 @@ export default function AddEmployeeForm() {
           onChange={(e) => setRole(e.target.value)}
           placeholder="Developer"
           required
-          className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="glass-input w-full px-4 py-3 text-white placeholder-white/20"
         />
       </div>
 
       {error && (
-        <div className="bg-red-500/10 border border-red-500 rounded-lg p-3 text-red-400 text-sm">
+        <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-red-300 text-sm backdrop-blur-md">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="bg-green-500/10 border border-green-500 rounded-lg p-3 text-green-400 text-sm">
+        <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-green-300 text-sm backdrop-blur-md">
           Employee added successfully!
         </div>
       )}
@@ -143,7 +145,7 @@ export default function AddEmployeeForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg transition-colors"
+        className="glass-button w-full py-4 rounded-xl font-semibold text-white shadow-lg disabled:opacity-50 disabled:cursor-not-allowed mt-2"
       >
         {loading ? 'Adding Employee...' : 'Add Employee'}
       </button>

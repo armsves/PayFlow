@@ -238,143 +238,163 @@ export default function BridgePage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-8">
-      <div className="container mx-auto px-4">
+    <main className="min-h-screen pb-20 relative">
+       {/* Decorative Glows */}
+      <div className="absolute top-40 left-0 w-[500px] h-[500px] opacity-20 pointer-events-none blur-[120px] bg-blue-600/40"></div>
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] opacity-20 pointer-events-none blur-[120px] bg-purple-600/40"></div>
+
+      <div className="container mx-auto px-4 py-8 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Cross-Chain Bridge
-              </span>
+          <div className="text-center mb-12">
+            <h1 className="text-5xl font-bold mb-4 tracking-tight text-white">
+              Cross-Chain Bridge
             </h1>
-            <p className="text-slate-400 text-lg">
+            <p className="text-blue-200/60 text-lg max-w-lg mx-auto">
               Powered by LI.FI - Swap and bridge tokens across multiple chains
             </p>
           </div>
 
           {/* Test Buttons Section */}
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 mb-6">
-            <h2 className="text-xl font-semibold text-white mb-4">Quick Test Scenarios</h2>
+          <div className="glass-panel p-8 mb-8">
+            <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+              <span className="text-xl">🧪</span> Quick Test Scenarios
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <button
                 onClick={testArbitrumToOptimism}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-medium transition"
+                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-blue-500/10 border-blue-500/20 hover:bg-blue-500/20"
               >
-                Test: ARB USDC → OP DAI
+                ARB USDC → OP DAI
               </button>
               <button
                 onClick={testBaseToPolygon}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-medium transition"
+                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-purple-500/10 border-purple-500/20 hover:bg-purple-500/20"
               >
-                Test: BASE ETH → MATIC USDC
+                BASE ETH → MATIC USDC
               </button>
               <button
                 onClick={testPolygonToBase}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium transition"
+                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-green-500/10 border-green-500/20 hover:bg-green-500/20"
               >
-                Test: MATIC USDC → BASE USDC
+                MATIC USDC → BASE USDC
               </button>
             </div>
           </div>
 
           {/* Bridge Form */}
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 mb-6">
-            <div className="space-y-6">
+          <div className="glass-panel p-8 mb-8 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+            <div className="relative z-10 space-y-8">
               {/* From Section */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  From Chain
-                </label>
-                <select
-                  value={fromChain}
-                  onChange={(e) => setFromChain(Number(e.target.value))}
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-primary"
-                >
-                  {Object.entries(CHAIN_NAMES).map(([id, name]) => (
-                    <option key={id} value={id}>{name}</option>
-                  ))}
-                </select>
-              </div>
+              <div className="bg-black/20 rounded-2xl p-6 border border-white/5">
+                <div className="flex justify-between items-center mb-4">
+                   <span className="text-xs uppercase tracking-widest text-blue-200/50 font-bold">From</span>
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                      Chain
+                    </label>
+                    <select
+                      value={fromChain}
+                      onChange={(e) => setFromChain(Number(e.target.value))}
+                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                    >
+                      {Object.entries(CHAIN_NAMES).map(([id, name]) => (
+                        <option key={id} value={id} className="bg-slate-900">{name}</option>
+                      ))}
+                    </select>
+                  </div>
 
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  From Token
-                </label>
-                <select
-                  value={fromToken}
-                  onChange={(e) => setFromToken(e.target.value)}
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-primary"
-                >
-                  {COMMON_TOKENS[fromChain]?.map((token) => (
-                    <option key={token.address} value={token.address}>
-                      {token.symbol}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  <div>
+                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                      Token
+                    </label>
+                    <select
+                      value={fromToken}
+                      onChange={(e) => setFromToken(e.target.value)}
+                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                    >
+                      {COMMON_TOKENS[fromChain]?.map((token) => (
+                        <option key={token.address} value={token.address} className="bg-slate-900">
+                          {token.symbol}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
 
-              {/* Amount */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  Amount
-                </label>
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder="0.0"
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-primary"
-                />
+                <div className="mt-6">
+                  <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                    Amount
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      placeholder="0.0"
+                      className="glass-input w-full pl-4 pr-16 py-4 text-2xl font-light text-white placeholder-white/10 bg-transparent border-none focus:ring-0 focus:bg-white/5 transition-colors"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Separator */}
-              <div className="flex justify-center">
-                <div className="bg-slate-700 p-2 rounded-full">
-                  <svg className="w-6 h-6 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex justify-center -my-6 relative z-20">
+                <div className="glass-panel p-3 rounded-full shadow-lg border-white/20 bg-slate-900">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
                 </div>
               </div>
 
               {/* To Section */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  To Chain
-                </label>
-                <select
-                  value={toChain}
-                  onChange={(e) => setToChain(Number(e.target.value))}
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-primary"
-                >
-                  {Object.entries(CHAIN_NAMES).map(([id, name]) => (
-                    <option key={id} value={id}>{name}</option>
-                  ))}
-                </select>
-              </div>
+              <div className="bg-black/20 rounded-2xl p-6 border border-white/5 pt-8">
+                <div className="flex justify-between items-center mb-4">
+                   <span className="text-xs uppercase tracking-widest text-blue-200/50 font-bold">To</span>
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                      Chain
+                    </label>
+                    <select
+                      value={toChain}
+                      onChange={(e) => setToChain(Number(e.target.value))}
+                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                    >
+                      {Object.entries(CHAIN_NAMES).map(([id, name]) => (
+                        <option key={id} value={id} className="bg-slate-900">{name}</option>
+                      ))}
+                    </select>
+                  </div>
 
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  To Token
-                </label>
-                <select
-                  value={toToken}
-                  onChange={(e) => setToToken(e.target.value)}
-                  className="w-full bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-primary"
-                >
-                  {COMMON_TOKENS[toChain]?.map((token) => (
-                    <option key={token.address} value={token.address}>
-                      {token.symbol}
-                    </option>
-                  ))}
-                </select>
+                  <div>
+                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                      Token
+                    </label>
+                    <select
+                      value={toToken}
+                      onChange={(e) => setToToken(e.target.value)}
+                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                    >
+                      {COMMON_TOKENS[toChain]?.map((token) => (
+                        <option key={token.address} value={token.address} className="bg-slate-900">
+                          {token.symbol}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
               </div>
 
               {/* Wallet Address Display */}
               {walletAddress && (
-                <div className="bg-slate-700/50 p-4 rounded-lg">
-                  <p className="text-sm text-slate-400">Connected Wallet</p>
-                  <p className="text-white font-mono text-sm break-all">{walletAddress}</p>
+                <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center gap-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <p className="text-sm text-blue-200/60">Connected: <span className="text-white font-mono ml-2">{walletAddress}</span></p>
                 </div>
               )}
 
@@ -383,14 +403,14 @@ export default function BridgePage() {
                 <button
                   onClick={handleGetQuote}
                   disabled={isLoading || !walletAddress}
-                  className="bg-gradient-to-r from-primary to-accent text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-primary/50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-button py-4 rounded-xl font-semibold text-white shadow-lg bg-gradient-to-r from-blue-600/80 to-blue-500/80 hover:from-blue-500 hover:to-blue-400 border-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Loading...' : 'Get Quote'}
                 </button>
                 <button
                   onClick={handleGetRoutes}
                   disabled={isLoading || !walletAddress}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-button py-4 rounded-xl font-semibold text-white shadow-lg bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Loading...' : 'Get Routes'}
                 </button>
@@ -400,7 +420,7 @@ export default function BridgePage() {
                 <button
                   onClick={handleExecuteRoute}
                   disabled={isLoading}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-button w-full py-4 rounded-xl font-semibold text-white shadow-lg bg-gradient-to-r from-green-500/80 to-emerald-500/80 hover:from-green-500 hover:to-emerald-500 border-none disabled:opacity-50 disabled:cursor-not-allowed mt-4"
                 >
                   {isLoading ? 'Executing...' : 'Execute Selected Route'}
                 </button>
@@ -410,20 +430,20 @@ export default function BridgePage() {
 
           {/* Error Display */}
           {error && (
-            <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-lg mb-6">
-              <p className="font-semibold">Error:</p>
-              <p>{error}</p>
+            <div className="glass-panel p-6 border-l-4 border-red-500 bg-red-500/10 mb-6">
+              <p className="font-semibold text-red-200">Error</p>
+              <p className="text-red-200/70 text-sm mt-1">{error}</p>
             </div>
           )}
 
           {/* Execution Status */}
           {executionStatus && (
-            <div className="bg-blue-500/10 border border-blue-500 text-blue-400 p-4 rounded-lg mb-6">
-              <p className="font-semibold">Status:</p>
-              <p>{executionStatus}</p>
+            <div className="glass-panel p-6 border-l-4 border-blue-500 bg-blue-500/10 mb-6">
+              <p className="font-semibold text-blue-200">Status</p>
+              <p className="text-blue-200/70 text-sm mt-1">{executionStatus}</p>
               {txHash && (
-                <p className="text-sm mt-2 break-all">
-                  Transaction Hash: <span className="font-mono">{txHash}</span>
+                <p className="text-xs mt-2 break-all text-blue-200/50">
+                  Transaction Hash: <span className="font-mono text-white">{txHash}</span>
                 </p>
               )}
             </div>
@@ -431,33 +451,37 @@ export default function BridgePage() {
 
           {/* Quote Display */}
           {quote && (
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 mb-6">
-              <h2 className="text-xl font-semibold text-white mb-4">Quote Result</h2>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-slate-400">From Amount:</span>
-                  <span className="text-white font-mono">
+            <div className="glass-panel p-8 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <h2 className="text-xl font-semibold text-white mb-6">Quote Result</h2>
+              <div className="space-y-4 bg-black/20 p-6 rounded-2xl border border-white/5">
+                <div className="flex justify-between items-center">
+                  <span className="text-blue-200/60 text-sm">From Amount</span>
+                  <span className="text-white font-mono text-lg font-medium">
                     {quote.action?.fromToken?.symbol} {formatUnits(BigInt(quote.action?.fromAmount || 0), quote.action?.fromToken?.decimals || 18)}
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-400">To Amount (Estimated):</span>
-                  <span className="text-white font-mono">
+                <div className="w-full h-px bg-white/5"></div>
+                <div className="flex justify-between items-center">
+                  <span className="text-blue-200/60 text-sm">To Amount (Est.)</span>
+                  <span className="text-green-400 font-mono text-lg font-medium">
                     {quote.action?.toToken?.symbol} {formatUnits(BigInt(quote.estimate?.toAmount || 0), quote.action?.toToken?.decimals || 18)}
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-400">Tool:</span>
-                  <span className="text-white">{quote.toolDetails?.name || 'N/A'}</span>
+                <div className="w-full h-px bg-white/5"></div>
+                <div className="flex justify-between items-center">
+                  <span className="text-blue-200/60 text-sm">Tool</span>
+                  <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-medium text-white">{quote.toolDetails?.name || 'N/A'}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-400">Estimated Time:</span>
-                  <span className="text-white">{quote.estimate?.executionDuration || 0}s</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-blue-200/60 text-sm">Est. Time</span>
+                  <span className="text-white text-sm">{quote.estimate?.executionDuration || 0}s</span>
                 </div>
               </div>
-              <details className="mt-4">
-                <summary className="text-slate-400 cursor-pointer hover:text-white">View Full Quote JSON</summary>
-                <pre className="mt-2 bg-slate-900 p-4 rounded-lg overflow-auto text-xs text-slate-300">
+              <details className="mt-4 group">
+                <summary className="text-blue-200/40 cursor-pointer hover:text-white text-xs uppercase tracking-widest transition-colors list-none flex items-center gap-2">
+                   <span className="group-open:rotate-90 transition-transform">▶</span> View JSON
+                </summary>
+                <pre className="mt-4 bg-black/40 p-4 rounded-xl overflow-auto text-[10px] text-blue-200/60 font-mono border border-white/5">
                   {JSON.stringify(quote, null, 2)}
                 </pre>
               </details>
@@ -466,29 +490,38 @@ export default function BridgePage() {
 
           {/* Routes Display */}
           {routes.length > 0 && (
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700">
-              <h2 className="text-xl font-semibold text-white mb-4">Available Routes ({routes.length})</h2>
+            <div className="glass-panel p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <h2 className="text-xl font-semibold text-white mb-6">Available Routes ({routes.length})</h2>
               <div className="space-y-4">
                 {routes.map((route, index) => (
                   <div
                     key={route.id}
                     onClick={() => setSelectedRoute(route)}
-                    className={`p-4 rounded-lg border-2 cursor-pointer transition ${
+                    className={`p-6 rounded-2xl cursor-pointer transition-all duration-300 border ${
                       selectedRoute?.id === route.id
-                        ? 'border-primary bg-primary/10'
-                        : 'border-slate-600 hover:border-slate-500'
+                        ? 'border-blue-500/50 bg-blue-500/10 shadow-[0_0_20px_rgba(59,130,246,0.15)]'
+                        : 'border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10'
                     }`}
                   >
-                    <div className="flex justify-between items-start mb-2">
-                      <span className="text-white font-semibold">Route {index + 1}</span>
-                      <span className="text-green-400 font-mono">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-white font-bold text-lg">Route {index + 1}</span>
+                      <span className="text-green-400 font-mono font-bold text-lg">
                         {formatUnits(BigInt(route.toAmount), route.toToken.decimals)} {route.toToken.symbol}
                       </span>
                     </div>
-                    <div className="text-sm text-slate-400 space-y-1">
-                      <p>Steps: {route.steps.length}</p>
-                      <p>Time: ~{route.steps.reduce((acc, step) => acc + (step.estimate.executionDuration || 0), 0)}s</p>
-                      <p>Tools: {route.steps.map(s => s.toolDetails.name).join(' → ')}</p>
+                    <div className="text-sm text-blue-200/60 space-y-1.5">
+                      <div className="flex items-center gap-2">
+                         <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+                         Steps: {route.steps.length}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
+                        Time: ~{route.steps.reduce((acc, step) => acc + (step.estimate.executionDuration || 0), 0)}s
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
+                        Tools: <span className="text-white">{route.steps.map(s => s.toolDetails.name).join(' → ')}</span>
+                      </div>
                     </div>
                   </div>
                 ))}

@@ -29,13 +29,11 @@ export default function AdminPanel() {
               setStats(tally);
             } catch (err) {
               console.error('Error fetching stats:', err);
-              // Stats are optional, don't block the UI
             }
           }
         } catch (err: any) {
           console.error('Error checking admin status:', err);
-          // If admin check fails, still show the forms but without admin badge
-          setIsAdmin(true); // Allow access to forms even if contract check fails
+          setIsAdmin(true); 
           if (err.message?.includes('chainId') || err.message?.includes('network')) {
             setNetworkError(true);
           }
@@ -53,8 +51,8 @@ export default function AdminPanel() {
 
   if (loading) {
     return (
-      <div className="bg-slate-800 rounded-lg p-6 text-center">
-        <p className="text-slate-400">Checking admin status...</p>
+      <div className="glass-panel p-8 text-center">
+        <div className="animate-pulse text-blue-200/60">Checking admin status...</div>
       </div>
     );
   }
@@ -64,14 +62,14 @@ export default function AdminPanel() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {networkError && (
-        <div className="bg-yellow-500/10 border border-yellow-500 rounded-lg p-4">
-          <div className="flex items-center gap-2 text-yellow-400">
-            <span className="text-xl">⚠️</span>
+        <div className="glass-panel p-4 border-l-4 border-yellow-500 bg-yellow-500/10">
+          <div className="flex items-center gap-3 text-yellow-200">
+            <span className="text-2xl">⚠️</span>
             <div>
               <p className="font-semibold">Network Issue Detected</p>
-              <p className="text-sm text-yellow-300">
+              <p className="text-sm opacity-80">
                 Please ensure you're connected to Scroll Sepolia network. Some features may not work properly.
               </p>
             </div>
@@ -79,26 +77,27 @@ export default function AdminPanel() {
         </div>
       )}
       
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-white mb-4">Admin Panel</h2>
+      <div className="glass-panel p-8 bg-gradient-to-br from-blue-600/20 to-purple-600/20 border-white/10 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+        <h2 className="text-2xl font-bold text-white mb-6 relative z-10">Admin Panel</h2>
         
         {stats && (
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-white/10 rounded-lg p-4">
-              <div className="text-white/80 text-sm">Total Invoices</div>
-              <div className="text-2xl font-bold text-white mt-1">
+          <div className="grid grid-cols-3 gap-6 relative z-10">
+            <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-5 border border-white/5">
+              <div className="text-blue-200/60 text-sm uppercase tracking-wider mb-1">Total Invoices</div>
+              <div className="text-3xl font-bold text-white">
                 {stats.totalInvoices.toString()}
               </div>
             </div>
-            <div className="bg-white/10 rounded-lg p-4">
-              <div className="text-white/80 text-sm">Paid Invoices</div>
-              <div className="text-2xl font-bold text-white mt-1">
+            <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-5 border border-white/5">
+              <div className="text-blue-200/60 text-sm uppercase tracking-wider mb-1">Paid Invoices</div>
+              <div className="text-3xl font-bold text-white">
                 {stats.paidInvoices.toString()}
               </div>
             </div>
-            <div className="bg-white/10 rounded-lg p-4">
-              <div className="text-white/80 text-sm">Total Paid</div>
-              <div className="text-2xl font-bold text-white mt-1">
+            <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-5 border border-white/5">
+              <div className="text-blue-200/60 text-sm uppercase tracking-wider mb-1">Total Paid</div>
+              <div className="text-3xl font-bold text-white bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
                 ${(Number(stats.totalPaid) / 1e18).toFixed(2)}
               </div>
             </div>
@@ -106,7 +105,7 @@ export default function AdminPanel() {
         )}
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-8">
         <AddEmployeeForm />
         <AddInvoiceForm />
       </div>
