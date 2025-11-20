@@ -1,71 +1,91 @@
-# PayFlow - Cross-Chain Payroll Platform
+# PayFlow
 
-🏆 **ETH Argentina Hackathon - Tierra de Buidlers 2025**
+**The Global Decentralized Payroll Platform**
 
-## Overview
+PayFlow enables organizations to manage global teams and execute cross-chain payments seamlessly. By leveraging L2 scalability, decentralized data storage, and cross-chain interoperability, PayFlow solves the fragmentation of crypto payroll.
 
-PayFlow is a decentralized payroll platform that enables companies to manage and execute employee payments across multiple blockchain networks.
+## 🌟 Key Features
 
-## 🎯 Sponsor Integrations
+### 🌍 Global & Cross-Chain
+- **Unified Payment Ledger**: Built on **Scroll L2** for low-cost, transparent payment tracking.
+- **Any Chain, Any Token**: Powered by **LiFi** and **Wormhole**, allowing employers to pay from their preferred chain while employees receive funds on theirs.
+- **Smart Routing**: Automatic optimization of bridging routes for lowest fees and fastest execution.
 
-- **Lemon Cash**: Mini App SDK for mobile-first payroll interface
-- **Arkiv (Golem)**: Decentralized database for employee records and invoice files
-- **Wormhole**: Cross-chain message passing and token bridging
-- **LiFi**: DEX and bridge aggregation for optimal payment routes
-- **Scroll**: L2 ledger for invoice tally and payment tracking
-- **Crossmint**: Email wallet onboarding and fiat onramp
-- **Mimic**: Automated recurring payment execution strategies
+### 📱 Mobile-First & Accessible
+- **Mini App Integration**: Designed as a **Lemon Cash Mini App** for a native mobile experience.
+- **Seamless Onboarding**: Email-based wallet creation and fiat on-ramps via **Crossmint**, making crypto payroll accessible to non-native users.
 
-## 🚀 Quick Start
+### 🔒 Decentralized Data & Compliance
+- **Verifiable Records**: Employee data and invoice files are stored on **Arkiv (Golem)**, ensuring data sovereignty, privacy, and permanence without centralized servers.
+- **Automated Invoicing**: Smart contract-driven invoice generation and status tracking.
 
-### Install Dependencies
+## 🏗 Architecture
+
+PayFlow orchestrates a complex stack of protocols to deliver a simple user experience:
+
+1.  **Frontend**: Next.js application serving as the dashboard and Lemon Mini App interface.
+2.  **Data Layer**: **Arkiv** acts as the decentralized backend, indexing employee profiles and invoice metadata.
+3.  **Execution Layer**: **Scroll** smart contracts manage the state of payment rounds and payment approvals.
+4.  **Bridge Layer**: **LiFi** and **Wormhole** contracts execute the actual value transfer across chains (e.g., Mainnet USDC -> Arbitrum USDC).
+
+## 🛠 Technology Stack
+
+- **Frontend**: Next.js 14, TypeScript, Tailwind CSS
+- **Smart Contracts**: Solidity, Hardhat
+- **Blockchain**: Scroll Sepolia (L2)
+- **Cross-Chain**: LiFi, Wormhole
+- **Storage**: Arkiv (Golem Network)
+- **Onboarding**: Crossmint
+- **Integration**: Lemon Cash SDK
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18+)
+- NPM or Yarn
+- A standard Web3 wallet (Metamask, Rabby) or Email (via Crossmint)
+
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/payflow/payflow.git
+    cd payflow
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    cd frontend && npm install && cd ..
+    ```
+
+3.  **Environment Configuration**
+    Create a `.env` file in the root and `frontend` directories based on `.env.example`.
+
+### Deployment (Smart Contracts)
+
+Compile and deploy the payroll contracts to Scroll Sepolia.
+
 ```bash
-npm install
-```
-
-### Configure Environment
-```bash
-cp .env.example .env
-# Edit .env with your API keys
-```
-
-### Compile Contracts
-```bash
+# Compile contracts
 npx hardhat compile
-```
 
-### Deploy to Scroll Sepolia
-```bash
+# Deploy to Scroll Sepolia
 npx hardhat run scripts/deploy.ts --network scroll-sepolia
 ```
 
-### Run Frontend
+### Running the Application
+
+Start the local development server.
+
 ```bash
 cd frontend
-npm install
 npm run dev
 ```
 
-## 📁 Project Structure
+Visit `http://localhost:3000` to access the PayFlow dashboard.
 
-```
-payflow/
-├── contracts/              # Solidity smart contracts
-├── scripts/               # Deployment scripts (TypeScript)
-├── test/                  # Contract tests (TypeScript)
-├── lib/                   # Integration libraries (TypeScript)
-├── frontend/              # Next.js Mini App
-└── docs/                  # Documentation
-```
+## 📄 License
 
-## 🏗️ Technology Stack
-
-- **Smart Contracts**: Solidity 0.8.20
-- **Deployment**: Hardhat + TypeScript
-- **Frontend**: Next.js 14 + TypeScript
-- **Styling**: Tailwind CSS
-- **Blockchain**: Scroll L2
-
-## 📝 License
-
-MIT
+This project is licensed under the MIT License.
