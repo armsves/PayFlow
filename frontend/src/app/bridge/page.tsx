@@ -273,39 +273,39 @@ export default function BridgePage() {
       <div className="absolute top-40 left-0 w-[500px] h-[500px] opacity-20 pointer-events-none blur-[120px] bg-blue-600/40"></div>
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] opacity-20 pointer-events-none blur-[120px] bg-purple-600/40"></div>
 
-      <div className="container mx-auto px-4 py-8 relative z-10">
+      <div className="container mx-auto px-4 py-6 sm:py-8 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold mb-4 tracking-tight text-white">
+          <div className="text-center mb-8 sm:mb-12">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 tracking-tight text-white">
               Cross-Chain Bridge
             </h1>
-            <p className="text-blue-200/60 text-lg max-w-lg mx-auto">
+            <p className="text-blue-200/60 text-sm sm:text-base md:text-lg max-w-lg mx-auto px-4">
               Powered by LI.FI - Swap and bridge tokens across multiple chains
             </p>
           </div>
 
           {/* Test Buttons Section */}
-          <div className="glass-panel p-8 mb-8">
-            <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-              <span className="text-xl">🧪</span> Quick Test Scenarios
+          <div className="glass-panel p-4 sm:p-6 md:p-8 mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6 flex items-center gap-2">
+              <span className="text-lg sm:text-xl">🧪</span> Quick Test Scenarios
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
               <button
                 onClick={testArbitrumToOptimism}
-                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-blue-500/10 border-blue-500/20 hover:bg-blue-500/20"
+                className="glass-button px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-medium bg-blue-500/10 border-blue-500/20 hover:bg-blue-500/20"
               >
                 ARB USDC → OP DAI
               </button>
               <button
                 onClick={testBaseToPolygon}
-                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-purple-500/10 border-purple-500/20 hover:bg-purple-500/20"
+                className="glass-button px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-medium bg-purple-500/10 border-purple-500/20 hover:bg-purple-500/20"
               >
                 BASE ETH → MATIC USDC
               </button>
               <button
                 onClick={testPolygonToBase}
-                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-green-500/10 border-green-500/20 hover:bg-green-500/20"
+                className="glass-button px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-medium bg-green-500/10 border-green-500/20 hover:bg-green-500/20"
               >
                 MATIC USDC → BASE USDC
               </button>
@@ -313,23 +313,23 @@ export default function BridgePage() {
           </div>
 
           {/* Bridge Form */}
-          <div className="glass-panel p-8 mb-8 relative overflow-hidden">
+          <div className="glass-panel p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
-            <div className="relative z-10 space-y-8">
+            <div className="relative z-10 space-y-6 sm:space-y-8">
               {/* From Section */}
-              <div className="bg-black/20 rounded-2xl p-6 border border-white/5">
-                <div className="flex justify-between items-center mb-4">
+              <div className="bg-black/20 rounded-2xl p-4 sm:p-6 border border-white/5">
+                <div className="flex justify-between items-center mb-3 sm:mb-4">
                    <span className="text-xs uppercase tracking-widest text-blue-200/50 font-bold">From</span>
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                    <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                       Chain
                     </label>
                     <select
                       value={fromChain}
                       onChange={(e) => setFromChain(Number(e.target.value))}
-                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                      className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white cursor-pointer"
                     >
                       {Object.entries(CHAIN_NAMES).map(([id, name]) => (
                         <option key={id} value={id} className="bg-slate-900">{name}</option>
@@ -338,13 +338,13 @@ export default function BridgePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                    <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                       Token
                     </label>
                     <select
                       value={fromToken}
                       onChange={(e) => setFromToken(e.target.value)}
-                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                      className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white cursor-pointer"
                     >
                       {COMMON_TOKENS[fromChain]?.map((token) => (
                         <option key={token.address} value={token.address} className="bg-slate-900">
@@ -355,8 +355,8 @@ export default function BridgePage() {
                   </div>
                 </div>
 
-                <div className="mt-6">
-                  <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                <div className="mt-4 sm:mt-6">
+                  <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                     Amount
                   </label>
                   <div className="relative">
@@ -365,35 +365,35 @@ export default function BridgePage() {
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="0.0"
-                      className="glass-input w-full pl-4 pr-16 py-4 text-2xl font-light text-white placeholder-white/10 bg-transparent border-none focus:ring-0 focus:bg-white/5 transition-colors"
+                      className="glass-input w-full pl-3 sm:pl-4 pr-12 sm:pr-16 py-3 sm:py-4 text-xl sm:text-2xl font-light text-white placeholder-white/10 bg-transparent border-none focus:ring-0 focus:bg-white/5 transition-colors"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Separator */}
-              <div className="flex justify-center -my-6 relative z-20">
-                <div className="glass-panel p-3 rounded-full shadow-lg border-white/20 bg-slate-900">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex justify-center -my-4 sm:-my-6 relative z-20">
+                <div className="glass-panel p-2 sm:p-3 rounded-full shadow-lg border-white/20 bg-slate-900">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
                 </div>
               </div>
 
               {/* To Section */}
-              <div className="bg-black/20 rounded-2xl p-6 border border-white/5 pt-8">
-                <div className="flex justify-between items-center mb-4">
+              <div className="bg-black/20 rounded-2xl p-4 sm:p-6 border border-white/5 pt-6 sm:pt-8">
+                <div className="flex justify-between items-center mb-3 sm:mb-4">
                    <span className="text-xs uppercase tracking-widest text-blue-200/50 font-bold">To</span>
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                    <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                       Chain
                     </label>
                     <select
                       value={toChain}
                       onChange={(e) => setToChain(Number(e.target.value))}
-                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                      className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white cursor-pointer"
                     >
                       {Object.entries(CHAIN_NAMES).map(([id, name]) => (
                         <option key={id} value={id} className="bg-slate-900">{name}</option>
@@ -402,13 +402,13 @@ export default function BridgePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                    <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                       Token
                     </label>
                     <select
                       value={toToken}
                       onChange={(e) => setToToken(e.target.value)}
-                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                      className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white cursor-pointer"
                     >
                       {COMMON_TOKENS[toChain]?.map((token) => (
                         <option key={token.address} value={token.address} className="bg-slate-900">
@@ -421,17 +421,17 @@ export default function BridgePage() {
               </div>
 
               {/* Wallet Address Display */}
-              <div className={`p-4 rounded-xl border flex items-center gap-3 ${
+              <div className={`p-3 sm:p-4 rounded-xl border flex items-center gap-3 ${
                 walletAddress
                   ? 'bg-green-500/5 border-green-500/20'
                   : 'bg-red-500/5 border-red-500/20'
               }`}>
-                <div className={`w-2 h-2 rounded-full ${
+                <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
                   walletAddress ? 'bg-green-500 animate-pulse' : 'bg-red-500'
                 }`}></div>
-                <p className="text-sm text-blue-200/60">
+                <p className="text-xs sm:text-sm text-blue-200/60 break-all">
                   {walletAddress ? (
-                    <>Connected: <span className="text-white font-mono ml-2">{walletAddress}</span></>
+                    <>Connected: <span className="text-white font-mono ml-1 sm:ml-2">{walletAddress}</span></>
                   ) : (
                     <>Not connected - Please click "Connect Wallet" in the navbar</>
                   )}
@@ -439,18 +439,18 @@ export default function BridgePage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <button
                   onClick={handleGetQuote}
                   disabled={isLoading || !walletAddress}
-                  className="glass-button py-4 rounded-xl font-semibold text-white shadow-lg bg-gradient-to-r from-blue-600/80 to-blue-500/80 hover:from-blue-500 hover:to-blue-400 border-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-button py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-white shadow-lg bg-gradient-to-r from-blue-600/80 to-blue-500/80 hover:from-blue-500 hover:to-blue-400 border-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Loading...' : 'Get Quote'}
                 </button>
                 <button
                   onClick={handleGetRoutes}
                   disabled={isLoading || !walletAddress}
-                  className="glass-button py-4 rounded-xl font-semibold text-white shadow-lg bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-button py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-white shadow-lg bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Loading...' : 'Get Routes'}
                 </button>
@@ -460,7 +460,7 @@ export default function BridgePage() {
                 <button
                   onClick={handleExecuteRoute}
                   disabled={isLoading}
-                  className="glass-button w-full py-4 rounded-xl font-semibold text-white shadow-lg bg-gradient-to-r from-green-500/80 to-emerald-500/80 hover:from-green-500 hover:to-emerald-500 border-none disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+                  className="glass-button w-full py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-white shadow-lg bg-gradient-to-r from-green-500/80 to-emerald-500/80 hover:from-green-500 hover:to-emerald-500 border-none disabled:opacity-50 disabled:cursor-not-allowed mt-3 sm:mt-4"
                 >
                   {isLoading ? 'Executing...' : 'Execute Selected Route'}
                 </button>
@@ -470,17 +470,17 @@ export default function BridgePage() {
 
           {/* Error Display */}
           {error && (
-            <div className="glass-panel p-6 border-l-4 border-red-500 bg-red-500/10 mb-6">
-              <p className="font-semibold text-red-200">Error</p>
-              <p className="text-red-200/70 text-sm mt-1">{error}</p>
+            <div className="glass-panel p-4 sm:p-6 border-l-4 border-red-500 bg-red-500/10 mb-4 sm:mb-6">
+              <p className="font-semibold text-red-200 text-sm sm:text-base">Error</p>
+              <p className="text-red-200/70 text-xs sm:text-sm mt-1">{error}</p>
             </div>
           )}
 
           {/* Execution Status */}
           {executionStatus && (
-            <div className="glass-panel p-6 border-l-4 border-blue-500 bg-blue-500/10 mb-6">
-              <p className="font-semibold text-blue-200">Status</p>
-              <p className="text-blue-200/70 text-sm mt-1">{executionStatus}</p>
+            <div className="glass-panel p-4 sm:p-6 border-l-4 border-blue-500 bg-blue-500/10 mb-4 sm:mb-6">
+              <p className="font-semibold text-blue-200 text-sm sm:text-base">Status</p>
+              <p className="text-blue-200/70 text-xs sm:text-sm mt-1">{executionStatus}</p>
               {txHash && (
                 <p className="text-xs mt-2 break-all text-blue-200/50">
                   Transaction Hash: <span className="font-mono text-white">{txHash}</span>
@@ -491,37 +491,37 @@ export default function BridgePage() {
 
           {/* Quote Display */}
           {quote && (
-            <div className="glass-panel p-8 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <h2 className="text-xl font-semibold text-white mb-6">Quote Result</h2>
-              <div className="space-y-4 bg-black/20 p-6 rounded-2xl border border-white/5">
-                <div className="flex justify-between items-center">
-                  <span className="text-blue-200/60 text-sm">From Amount</span>
-                  <span className="text-white font-mono text-lg font-medium">
+            <div className="glass-panel p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Quote Result</h2>
+              <div className="space-y-3 sm:space-y-4 bg-black/20 p-4 sm:p-6 rounded-2xl border border-white/5">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-blue-200/60 text-xs sm:text-sm">From Amount</span>
+                  <span className="text-white font-mono text-sm sm:text-base md:text-lg font-medium break-all text-right">
                     {quote.action?.fromToken?.symbol} {formatUnits(BigInt(quote.action?.fromAmount || 0), quote.action?.fromToken?.decimals || 18)}
                   </span>
                 </div>
                 <div className="w-full h-px bg-white/5"></div>
-                <div className="flex justify-between items-center">
-                  <span className="text-blue-200/60 text-sm">To Amount (Est.)</span>
-                  <span className="text-green-400 font-mono text-lg font-medium">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-blue-200/60 text-xs sm:text-sm">To Amount (Est.)</span>
+                  <span className="text-green-400 font-mono text-sm sm:text-base md:text-lg font-medium break-all text-right">
                     {quote.action?.toToken?.symbol} {formatUnits(BigInt(quote.estimate?.toAmount || 0), quote.action?.toToken?.decimals || 18)}
                   </span>
                 </div>
                 <div className="w-full h-px bg-white/5"></div>
-                <div className="flex justify-between items-center">
-                  <span className="text-blue-200/60 text-sm">Tool</span>
-                  <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-medium text-white">{quote.toolDetails?.name || 'N/A'}</span>
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-blue-200/60 text-xs sm:text-sm">Tool</span>
+                  <span className="px-2 sm:px-3 py-1 rounded-full bg-white/10 text-xs font-medium text-white">{quote.toolDetails?.name || 'N/A'}</span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-blue-200/60 text-sm">Est. Time</span>
-                  <span className="text-white text-sm">{quote.estimate?.executionDuration || 0}s</span>
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-blue-200/60 text-xs sm:text-sm">Est. Time</span>
+                  <span className="text-white text-xs sm:text-sm">{quote.estimate?.executionDuration || 0}s</span>
                 </div>
               </div>
               <details className="mt-4 group">
                 <summary className="text-blue-200/40 cursor-pointer hover:text-white text-xs uppercase tracking-widest transition-colors list-none flex items-center gap-2">
                    <span className="group-open:rotate-90 transition-transform">▶</span> View JSON
                 </summary>
-                <pre className="mt-4 bg-black/40 p-4 rounded-xl overflow-auto text-[10px] text-blue-200/60 font-mono border border-white/5">
+                <pre className="mt-4 bg-black/40 p-3 sm:p-4 rounded-xl overflow-auto text-[9px] sm:text-[10px] text-blue-200/60 font-mono border border-white/5 max-h-96">
                   {JSON.stringify(quote, null, 2)}
                 </pre>
               </details>
@@ -530,37 +530,37 @@ export default function BridgePage() {
 
           {/* Routes Display */}
           {routes.length > 0 && (
-            <div className="glass-panel p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <h2 className="text-xl font-semibold text-white mb-6">Available Routes ({routes.length})</h2>
-              <div className="space-y-4">
+            <div className="glass-panel p-4 sm:p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Available Routes ({routes.length})</h2>
+              <div className="space-y-3 sm:space-y-4">
                 {routes.map((route, index) => (
                   <div
                     key={route.id}
                     onClick={() => setSelectedRoute(route)}
-                    className={`p-6 rounded-2xl cursor-pointer transition-all duration-300 border ${
+                    className={`p-4 sm:p-6 rounded-2xl cursor-pointer transition-all duration-300 border ${
                       selectedRoute?.id === route.id
                         ? 'border-blue-500/50 bg-blue-500/10 shadow-[0_0_20px_rgba(59,130,246,0.15)]'
                         : 'border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10'
                     }`}
                   >
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="text-white font-bold text-lg">Route {index + 1}</span>
-                      <span className="text-green-400 font-mono font-bold text-lg">
+                    <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 sm:gap-0 mb-3">
+                      <span className="text-white font-bold text-base sm:text-lg">Route {index + 1}</span>
+                      <span className="text-green-400 font-mono font-bold text-base sm:text-lg break-all">
                         {formatUnits(BigInt(route.toAmount), route.toToken.decimals)} {route.toToken.symbol}
                       </span>
                     </div>
-                    <div className="text-sm text-blue-200/60 space-y-1.5">
+                    <div className="text-xs sm:text-sm text-blue-200/60 space-y-1.5">
                       <div className="flex items-center gap-2">
-                         <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+                         <span className="w-1.5 h-1.5 bg-blue-500 rounded-full flex-shrink-0"></span>
                          Steps: {route.steps.length}
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
+                        <span className="w-1.5 h-1.5 bg-purple-500 rounded-full flex-shrink-0"></span>
                         Time: ~{route.steps.reduce((acc, step) => acc + (step.estimate.executionDuration || 0), 0)}s
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
-                        Tools: <span className="text-white">{route.steps.map(s => s.toolDetails.name).join(' → ')}</span>
+                      <div className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 bg-orange-500 rounded-full flex-shrink-0 mt-1.5"></span>
+                        <span className="flex-1">Tools: <span className="text-white break-words">{route.steps.map(s => s.toolDetails.name).join(' → ')}</span></span>
                       </div>
                     </div>
                   </div>

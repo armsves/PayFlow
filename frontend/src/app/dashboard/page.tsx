@@ -47,15 +47,15 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="min-h-screen pb-20">
-      <div className="container mx-auto px-4 py-8">
-        <header className="mb-12 text-center relative">
-          <div className="absolute inset-0 bg-blue-500/10 blur-[80px] rounded-full transform -translate-y-1/2 pointer-events-none"></div>
-          <h1 className="text-5xl font-bold text-white mb-4 tracking-tight relative z-10">Dashboard</h1>
-          <p className="text-blue-200/60 text-lg relative z-10">Overview of your organization's activity</p>
+    <main className="min-h-screen pb-12 sm:pb-20">
+      <div className="container mx-auto px-4 py-6 sm:py-8">
+        <header className="mb-8 sm:mb-12 text-center relative">
+          <div className="absolute inset-0 bg-blue-500/10 blur-[60px] sm:blur-[80px] rounded-full transform -translate-y-1/2 pointer-events-none"></div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-4 tracking-tight relative z-10">Dashboard</h1>
+          <p className="text-blue-200/60 text-sm sm:text-base md:text-lg relative z-10 px-4">Overview of your organization's activity</p>
         </header>
 
-        <div className="space-y-8 max-w-6xl mx-auto">
+        <div className="space-y-6 sm:space-y-8 max-w-6xl mx-auto">
           <EmployeeList employees={employees} loading={loadingEmployees} onRefresh={loadEmployees} />
           <InvoiceList invoices={invoices} loading={loadingInvoices} onRefresh={loadAllInvoices} />
         </div>

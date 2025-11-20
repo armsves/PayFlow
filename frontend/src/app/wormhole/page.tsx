@@ -216,39 +216,39 @@ export default function WormholePage() {
       <div className="absolute top-0 right-0 w-[500px] h-[500px] opacity-20 pointer-events-none blur-[120px] bg-pink-600/40"></div>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] opacity-20 pointer-events-none blur-[120px] bg-purple-600/40"></div>
 
-      <div className="container mx-auto px-4 py-8 relative z-10">
+      <div className="container mx-auto px-4 py-6 sm:py-8 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold mb-4 tracking-tight text-white">
+          <div className="text-center mb-8 sm:mb-12">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 tracking-tight text-white">
               Wormhole Bridge
             </h1>
-            <p className="text-blue-200/60 text-lg max-w-lg mx-auto">
+            <p className="text-blue-200/60 text-sm sm:text-base md:text-lg max-w-lg mx-auto px-4">
               Cross-chain token transfers powered by Wormhole
             </p>
           </div>
 
           {/* Test Buttons Section */}
-          <div className="glass-panel p-8 mb-8">
-            <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-              <span className="text-xl">🧪</span> Quick Test Scenarios
+          <div className="glass-panel p-4 sm:p-6 md:p-8 mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6 flex items-center gap-2">
+              <span className="text-lg sm:text-xl">🧪</span> Quick Test Scenarios
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
               <button
                 onClick={testAvalancheToSepolia}
-                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-purple-500/10 border-purple-500/20 hover:bg-purple-500/20"
+                className="glass-button px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-medium bg-purple-500/10 border-purple-500/20 hover:bg-purple-500/20"
               >
                 AVAX → Sepolia (Manual)
               </button>
               <button
                 onClick={testSepoliaToAvalanche}
-                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-pink-500/10 border-pink-500/20 hover:bg-pink-500/20"
+                className="glass-button px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-medium bg-pink-500/10 border-pink-500/20 hover:bg-pink-500/20"
               >
                 Sepolia → AVAX (Auto)
               </button>
               <button
                 onClick={testSolanaToSepolia}
-                className="glass-button px-4 py-3 rounded-xl text-sm font-medium bg-indigo-500/10 border-indigo-500/20 hover:bg-indigo-500/20"
+                className="glass-button px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-medium bg-indigo-500/10 border-indigo-500/20 hover:bg-indigo-500/20"
               >
                 SOL → Sepolia
               </button>
@@ -256,12 +256,12 @@ export default function WormholePage() {
           </div>
 
           {/* Configuration Section */}
-          <div className="glass-panel p-8 mb-8">
-            <h2 className="text-xl font-semibold text-white mb-6">Transfer Configuration</h2>
+          <div className="glass-panel p-4 sm:p-6 md:p-8 mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Transfer Configuration</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
               <div>
-                <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                   Network
                 </label>
                 <select
@@ -270,7 +270,7 @@ export default function WormholePage() {
                     setNetwork(e.target.value as WormholeNetwork);
                     setIsInitialized(false);
                   }}
-                  className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                  className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white cursor-pointer"
                 >
                   <option value="Testnet" className="bg-slate-900">Testnet</option>
                   <option value="Mainnet" className="bg-slate-900">Mainnet</option>
@@ -279,13 +279,13 @@ export default function WormholePage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                   Transfer Type
                 </label>
                 <select
                   value={transferType}
                   onChange={(e) => setTransferType(e.target.value as TransferType)}
-                  className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                  className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white cursor-pointer"
                 >
                   <option value="token" className="bg-slate-900">Token Bridge (WTT)</option>
                   <option value="cctp" className="bg-slate-900">Circle CCTP (USDC)</option>
@@ -294,15 +294,15 @@ export default function WormholePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-blue-200/60 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                 Transfer Mode
               </label>
-              <div className="flex gap-4 bg-black/20 p-2 rounded-xl inline-flex border border-white/5">
+              <div className="flex gap-2 sm:gap-4 bg-black/20 p-1.5 sm:p-2 rounded-xl inline-flex border border-white/5 w-full sm:w-auto">
                 <button
                    onClick={() => setTransferMode('manual')}
-                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                     transferMode === 'manual' 
-                       ? 'bg-white/10 text-white shadow-lg' 
+                   className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all flex-1 sm:flex-none ${
+                     transferMode === 'manual'
+                       ? 'bg-white/10 text-white shadow-lg'
                        : 'text-blue-200/40 hover:text-white'
                    }`}
                 >
@@ -310,9 +310,9 @@ export default function WormholePage() {
                 </button>
                 <button
                    onClick={() => setTransferMode('automatic')}
-                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                     transferMode === 'automatic' 
-                       ? 'bg-white/10 text-white shadow-lg' 
+                   className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all flex-1 sm:flex-none ${
+                     transferMode === 'automatic'
+                       ? 'bg-white/10 text-white shadow-lg'
                        : 'text-blue-200/40 hover:text-white'
                    }`}
                 >
@@ -323,22 +323,22 @@ export default function WormholePage() {
           </div>
 
           {/* Bridge Form */}
-          <div className="glass-panel p-8 mb-8 relative overflow-hidden">
-            <div className="relative z-10 space-y-8">
+          <div className="glass-panel p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 relative overflow-hidden">
+            <div className="relative z-10 space-y-6 sm:space-y-8">
               {/* From Section */}
-              <div className="bg-black/20 rounded-2xl p-6 border border-white/5">
-                <div className="flex justify-between items-center mb-4">
+              <div className="bg-black/20 rounded-2xl p-4 sm:p-6 border border-white/5">
+                <div className="flex justify-between items-center mb-3 sm:mb-4">
                    <span className="text-xs uppercase tracking-widest text-pink-200/50 font-bold">From</span>
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                    <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                       Chain
                     </label>
                     <select
                       value={fromChain}
                       onChange={(e) => setFromChain(e.target.value)}
-                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                      className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white cursor-pointer"
                     >
                       {availableChains.map((chain) => (
                         <option key={chain} value={chain} className="bg-slate-900">
@@ -349,13 +349,13 @@ export default function WormholePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                    <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                       Token
                     </label>
                     <select
                       value={fromToken}
                       onChange={(e) => setFromToken(e.target.value)}
-                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                      className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white cursor-pointer"
                     >
                       {getTokensForChain(fromChain).map((token) => (
                         <option key={token.address} value={token.address} className="bg-slate-900">
@@ -366,8 +366,8 @@ export default function WormholePage() {
                   </div>
                 </div>
 
-                <div className="mt-6">
-                  <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                <div className="mt-4 sm:mt-6">
+                  <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                     Amount
                   </label>
                   <div className="relative">
@@ -377,15 +377,15 @@ export default function WormholePage() {
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="0.0"
                       step="0.001"
-                      className="glass-input w-full pl-4 pr-16 py-4 text-2xl font-light text-white placeholder-white/10 bg-transparent border-none focus:ring-0 focus:bg-white/5 transition-colors"
+                      className="glass-input w-full pl-3 sm:pl-4 pr-12 sm:pr-16 py-3 sm:py-4 text-xl sm:text-2xl font-light text-white placeholder-white/10 bg-transparent border-none focus:ring-0 focus:bg-white/5 transition-colors"
                     />
                   </div>
                 </div>
-                
+
                 {/* Native Gas (for automatic transfers) */}
                 {transferMode === 'automatic' && (
-                  <div className="mt-6 pt-6 border-t border-white/5">
-                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                  <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-white/5">
+                    <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                       Native Gas Drop-off (optional)
                     </label>
                     <input
@@ -394,9 +394,9 @@ export default function WormholePage() {
                       onChange={(e) => setNativeGas(e.target.value)}
                       placeholder="0.0"
                       step="0.001"
-                      className="glass-input w-full px-4 py-3 text-white"
+                      className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white"
                     />
-                    <p className="text-xs text-blue-200/40 mt-2">
+                    <p className="text-[10px] sm:text-xs text-blue-200/40 mt-2">
                       Amount of native gas to deliver to destination address
                     </p>
                   </div>
@@ -404,28 +404,28 @@ export default function WormholePage() {
               </div>
 
               {/* Separator */}
-              <div className="flex justify-center -my-6 relative z-20">
-                 <div className="glass-panel p-3 rounded-full shadow-lg border-white/20 bg-slate-900">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex justify-center -my-4 sm:-my-6 relative z-20">
+                 <div className="glass-panel p-2 sm:p-3 rounded-full shadow-lg border-white/20 bg-slate-900">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
                 </div>
               </div>
 
               {/* To Section */}
-              <div className="bg-black/20 rounded-2xl p-6 border border-white/5 pt-8">
-                 <div className="flex justify-between items-center mb-4">
+              <div className="bg-black/20 rounded-2xl p-4 sm:p-6 border border-white/5 pt-6 sm:pt-8">
+                 <div className="flex justify-between items-center mb-3 sm:mb-4">
                    <span className="text-xs uppercase tracking-widest text-purple-200/50 font-bold">To</span>
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                    <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                       Chain
                     </label>
                     <select
                       value={toChain}
                       onChange={(e) => setToChain(e.target.value)}
-                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                      className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white cursor-pointer"
                     >
                       {availableChains.map((chain) => (
                         <option key={chain} value={chain} className="bg-slate-900">
@@ -436,13 +436,13 @@ export default function WormholePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-blue-200/60 mb-2">
+                    <label className="block text-xs sm:text-sm font-medium text-blue-200/60 mb-2">
                       Token
                     </label>
                     <select
                       value={toToken}
                       onChange={(e) => setToToken(e.target.value)}
-                      className="glass-input w-full px-4 py-3 text-white cursor-pointer"
+                      className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-white cursor-pointer"
                     >
                       {getTokensForChain(toChain).map((token) => (
                         <option key={token.address} value={token.address} className="bg-slate-900">
@@ -456,16 +456,16 @@ export default function WormholePage() {
 
               {/* Wallet Address Display */}
               {walletAddress && (
-                <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center gap-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <p className="text-sm text-blue-200/60">Connected: <span className="text-white font-mono ml-2">{walletAddress}</span></p>
+                <div className="bg-white/5 p-3 sm:p-4 rounded-xl border border-white/10 flex items-center gap-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse flex-shrink-0"></div>
+                  <p className="text-xs sm:text-sm text-blue-200/60 break-all">Connected: <span className="text-white font-mono ml-1 sm:ml-2">{walletAddress}</span></p>
                 </div>
               )}
 
               {/* SDK Status */}
-              <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center justify-between">
-                <p className="text-sm text-blue-200/60">Wormhole SDK Status</p>
-                <p className={`text-sm font-semibold flex items-center gap-2 ${isInitialized ? 'text-green-400' : 'text-yellow-400'}`}>
+              <div className="bg-white/5 p-3 sm:p-4 rounded-xl border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                <p className="text-xs sm:text-sm text-blue-200/60">Wormhole SDK Status</p>
+                <p className={`text-xs sm:text-sm font-semibold flex items-center gap-2 ${isInitialized ? 'text-green-400' : 'text-yellow-400'}`}>
                   {isInitialized ? (
                     <>✓ Initialized on {network}</>
                   ) : (
@@ -475,18 +475,18 @@ export default function WormholePage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <button
                   onClick={handleGetChainInfo}
                   disabled={isLoading || !isInitialized}
-                  className="glass-button py-4 rounded-xl font-semibold text-white shadow-lg bg-gradient-to-r from-purple-600/80 to-pink-600/80 hover:from-purple-500 hover:to-pink-500 border-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-button py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-white shadow-lg bg-gradient-to-r from-purple-600/80 to-pink-600/80 hover:from-purple-500 hover:to-pink-500 border-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Loading...' : 'Get Chain Info'}
                 </button>
                 <button
                   onClick={handlePrepareTransfer}
                   disabled={isLoading || !isInitialized || !walletAddress}
-                  className="glass-button py-4 rounded-xl font-semibold text-white shadow-lg bg-gradient-to-r from-green-600/80 to-emerald-600/80 hover:from-green-500 hover:to-emerald-500 border-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="glass-button py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-white shadow-lg bg-gradient-to-r from-green-600/80 to-emerald-600/80 hover:from-green-500 hover:to-emerald-500 border-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Preparing...' : 'Prepare Transfer'}
                 </button>

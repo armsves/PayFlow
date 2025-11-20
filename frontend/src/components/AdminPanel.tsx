@@ -77,27 +77,27 @@ export default function AdminPanel() {
         </div>
       )}
       
-      <div className="glass-panel p-8 bg-gradient-to-br from-blue-600/20 to-purple-600/20 border-white/10 relative overflow-hidden">
+      <div className="glass-panel p-6 sm:p-8 bg-gradient-to-br from-blue-600/20 to-purple-600/20 border-white/10 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
-        <h2 className="text-2xl font-bold text-white mb-6 relative z-10">Admin Panel</h2>
-        
+        <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 relative z-10">Admin Panel</h2>
+
         {stats && (
-          <div className="grid grid-cols-3 gap-6 relative z-10">
-            <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-5 border border-white/5">
-              <div className="text-blue-200/60 text-sm uppercase tracking-wider mb-1">Total Invoices</div>
-              <div className="text-3xl font-bold text-white">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 relative z-10">
+            <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-white/5">
+              <div className="text-blue-200/60 text-xs sm:text-sm uppercase tracking-wider mb-1">Total Invoices</div>
+              <div className="text-2xl sm:text-3xl font-bold text-white">
                 {stats.totalInvoices.toString()}
               </div>
             </div>
-            <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-5 border border-white/5">
-              <div className="text-blue-200/60 text-sm uppercase tracking-wider mb-1">Paid Invoices</div>
-              <div className="text-3xl font-bold text-white">
+            <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-white/5">
+              <div className="text-blue-200/60 text-xs sm:text-sm uppercase tracking-wider mb-1">Paid Invoices</div>
+              <div className="text-2xl sm:text-3xl font-bold text-white">
                 {stats.paidInvoices.toString()}
               </div>
             </div>
-            <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-5 border border-white/5">
-              <div className="text-blue-200/60 text-sm uppercase tracking-wider mb-1">Total Paid</div>
-              <div className="text-3xl font-bold text-white bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+            <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-white/5">
+              <div className="text-blue-200/60 text-xs sm:text-sm uppercase tracking-wider mb-1">Total Paid</div>
+              <div className="text-2xl sm:text-3xl font-bold text-white bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
                 ${(Number(stats.totalPaid) / 1e18).toFixed(2)}
               </div>
             </div>
@@ -105,7 +105,7 @@ export default function AdminPanel() {
         )}
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
         <AddEmployeeForm />
         <AddInvoiceForm />
       </div>
