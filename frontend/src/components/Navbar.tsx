@@ -21,17 +21,23 @@ export default function Navbar() {
           </Link>
 
           <div className="flex items-center gap-6">
-            <Link 
-              href="/dashboard" 
+            <Link
+              href="/dashboard"
               className="text-slate-300 hover:text-white transition font-medium"
             >
               Dashboard
             </Link>
-            <Link 
-              href="/manage" 
+            <Link
+              href="/manage"
               className="text-slate-300 hover:text-white transition font-medium"
             >
               Manage
+            </Link>
+            <Link
+              href="/bridge"
+              className="text-slate-300 hover:text-white transition font-medium"
+            >
+              Bridge
             </Link>
             <ConnectWallet />
           </div>
